@@ -1,0 +1,17 @@
+{
+    "name": "comphppuebla/echale-gas-api",
+    "description": "REST API para la aplicación Web Échale Gas (Open Data Puebla 2013)",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luis Montealegre",
+            "email": "luis.montealegre@mandragora-web-systems.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "2.3.2",
+        "doctrine/dbal": "v2.4.0",
+        "willdurand/negotiation": "1.0.1",
+        "vlucas/valitron": "1.1.4"
+    }
+}
