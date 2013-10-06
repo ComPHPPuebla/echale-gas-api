@@ -12,18 +12,12 @@ class QuerySpecificationEvent
     protected $specification;
 
     /**
-     * @var array
-     */
-    protected $criteria;
-
-    /**
      * @param BaseSpecification $specification
      * @param array $criteria
      */
-    public function __construct(BaseSpecification $specification, array $criteria = [])
+    public function __construct(BaseSpecification $specification)
     {
         $this->specification = $specification;
-        $this->criteria = $criteria;
     }
 
     /**

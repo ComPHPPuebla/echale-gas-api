@@ -1,1 +1,1 @@
-{{ {'message': 'Page not found', 'url': url}|json_encode|raw }}
+{{ {'message': 'Page not found', 'url': url}|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}

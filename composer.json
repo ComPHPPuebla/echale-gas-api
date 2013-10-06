@@ -33,12 +33,13 @@
         "monolog/monolog": "1.6.0",
         "slim/views": "0.1.0",
         "twig/twig": "v1.14.0",
-        "phing/phing": "2.6.1",
         "pagerfanta/pagerfanta": "v1.0.1",
-        "evenement/evenement": "v2.0.0"
+        "evenement/evenement": "v2.0.0",
+        "zircote/hal": "0.3.3"
     },
     "require-dev": {
-        "symfony/console": "v2.3.5"
+        "symfony/console": "v2.3.5",
+        "phing/phing": "2.6.1"
     },
     "autoload": {
         "psr-0": {

@@ -35,7 +35,7 @@ class BaseRepository
     /**
      * @return Doctrine\DBAL\Query\QueryBuilder
      */
-    public function createQueryBuilder()
+    protected function createQueryBuilder()
     {
         return $this->connection->createQueryBuilder();
     }
@@ -44,7 +44,7 @@ class BaseRepository
      * @param string $sql
      * @param array $params
      */
-    public function fetchAll($sql, array $params = [])
+    protected function fetchAll($sql, array $params = [])
     {
         return $this->connection->fetchAll($sql, $params);
     }
@@ -54,9 +54,19 @@ class BaseRepository
      * @param array $params
      * @return array
      */
-    public function fetchAssoc($sql, array $params)
+    protected function fetchAssoc($sql, array $params = [])
     {
         return $this->connection->fetchAssoc($sql, $params);
+    }
+
+    /**
+     * @param string $sql
+     * @param array $params
+     * @return array
+     */
+    protected function fetchColumn($sql, array $params = [])
+    {
+        return $this->connection->fetchColumn($sql, $params);
     }
 
     /**
@@ -64,7 +74,7 @@ class BaseRepository
      * @param array $values
      * @return int
      */
-    public function doInsert($tableName, array $values)
+    protected function doInsert($tableName, array $values)
     {
         $this->connection->insert($tableName, $values);
 
@@ -76,7 +86,7 @@ class BaseRepository
      * @param array $values
      * @param array $identifier
      */
-    public function doUpdate($tableName, array $values, array $identifier)
+    protected function doUpdate($tableName, array $values, array $identifier)
     {
         $this->connection->update($tableName, $values, $identifier);
     }
@@ -85,7 +95,7 @@ class BaseRepository
      * @param string $tableName
      * @param array $identifier
      */
-    public function doDelete($tableName, array $identifier)
+    protected function doDelete($tableName, array $identifier)
     {
         $this->connection->delete($tableName, $identifier);
     }
