@@ -3,7 +3,7 @@ require '../resources/stations.php';
 
 $app->get('/gas-stations', function() use ($app) {
 
-     $stations = $app->stationRepository->findAll();
+     $stations = $app->stationsRepository->findAll();
 
      $app->contentType('application/json');
 

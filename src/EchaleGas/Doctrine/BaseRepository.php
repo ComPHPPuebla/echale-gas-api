@@ -1,7 +1,8 @@
 <?php
 namespace EchaleGas\Doctrine;
 
-use Doctrine\DBAL\Connection;
+use \Doctrine\DBAL\Connection;
+use \Evenement\EventEmitter;
 
 class BaseRepository
 {
@@ -11,11 +12,24 @@ class BaseRepository
     protected $connection;
 
     /**
+     * @var \Evenement\EventEmitter
+     */
+    protected $emitter;
+
+    /**
      * @param Connection $connection
      */
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
+    }
+
+    /**
+     * @param EventEmitter $emitter
+     */
+    public function setEmitter(EventEmitter $emitter)
+    {
+        $this->emitter = $emitter;
     }
 
     /**
@@ -57,11 +71,20 @@ class BaseRepository
         return $this->connection->lastInsertId();
     }
 
+    /**
+     * @param string $tableName
+     * @param array $values
+     * @param array $identifier
+     */
     public function doUpdate($tableName, array $values, array $identifier)
     {
         $this->connection->update($tableName, $values, $identifier);
     }
 
+    /**
+     * @param string $tableName
+     * @param array $identifier
+     */
     public function doDelete($tableName, array $identifier)
     {
         $this->connection->delete($tableName, $identifier);

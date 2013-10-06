@@ -33,7 +33,9 @@
         "monolog/monolog": "1.6.0",
         "slim/views": "0.1.0",
         "twig/twig": "v1.14.0",
-        "phing/phing": "2.6.1"
+        "phing/phing": "2.6.1",
+        "pagerfanta/pagerfanta": "v1.0.1",
+        "evenement/evenement": "v2.0.0"
     },
     "require-dev": {
         "symfony/console": "v2.3.5"

@@ -5,12 +5,14 @@ use EchaleGas\Doctrine\BaseRepository;
 
 class StationRepository extends BaseRepository
 {
-    public function findAll()
+    public function findAll(array $params = [])
     {
         $qb = $this->createQueryBuilder();
 
         $qb->select('*')
            ->from('stations', 's');
+
+        $this->emitter->emit('preFetchAll', [$qb, $params]);
 
         return $this->fetchAll($qb->getSQL());
     }

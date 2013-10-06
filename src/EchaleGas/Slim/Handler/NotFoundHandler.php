@@ -11,7 +11,7 @@ class NotFoundHandler extends Handler
         $this->app->log->info("Page not found {$url}");
 
         $this->app->status(404);
-        $this->app->render('error/notfound.html.twig', array('url' => $url));
+        $this->app->render("error/notfound.{$this->app->viewExtension}.twig", ['url' => $url]);
     }
 
     /**
