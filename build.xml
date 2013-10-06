@@ -43,6 +43,8 @@
     <target name="app:run-migrations" description="Run EMS database migrations" depends="app:create-migrations-phar">
         <echo msg="Execute migrations" />
         <exec passthru="true" command="php doctrine-migrations.phar migrations:migrate --configuration migrations/migrations.xml --db-configuration config/mysql.config.php --no-interaction --ansi -v" />
+        <echo msg="Inserts database" />
+        <exec passthru="true" command="./bin/cli dbal:import sql/insert.sql -v --ansi" /> 
     </target>
     
     <!-- Install the application  -->
