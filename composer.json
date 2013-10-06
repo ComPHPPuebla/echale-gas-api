@@ -5,13 +5,28 @@
     "authors": [
         {
             "name": "Luis Montealegre",
-            "email": "luis.montealegre@mandragora-web-systems.com"
+            "email": "luis.montealegre@mandragora-web-systems.com",
+            "role": "developer"
+        },
+        {
+            "name": "Isaac García",
+            "email": "isaac.gasi@gmail.com",
+            "role": "developer"
+        },
+        {
+            "name": "Daniel Chávez",
+            "email": "daniel.chavez.santos@gmail.com",
+            "role": "developer"
         }
     ],
     "require": {
         "slim/slim": "2.3.2",
         "doctrine/dbal": "v2.4.0",
         "willdurand/negotiation": "1.0.1",
-        "vlucas/valitron": "1.1.4"
+        "vlucas/valitron": "1.1.4",
+        "doctrine/migrations": "dev-master"
+    },
+    "require-dev": {
+        "symfony/console": "v2.3.5"
     }
 }
