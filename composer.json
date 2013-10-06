@@ -1,0 +1,60 @@
+{
+    "name": "comphppuebla/echale-gas-api",
+    "description": "REST API para la aplicación Web Échale Gas (Open Data Puebla 2013)",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luis Montealegre",
+            "email": "luis.montealegre@mandragora-web-systems.com",
+            "role": "developer"
+        },
+        {
+            "name": "Isaac García",
+            "email": "isaac.gasi@gmail.com",
+            "role": "developer"
+        },
+        {
+            "name": "Daniel Chávez",
+            "email": "daniel.chavez.santos@gmail.com",
+            "role": "developer"
+        },
+        {
+            "name": "Luis Antonio Gómez",
+            "email": "jimmylagp@gmail.com",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "slim/slim": "2.3.2",
+        "doctrine/dbal": "v2.4.0",
+        "willdurand/negotiation": "1.0.1",
+        "vlucas/valitron": "1.1.4",
+        "doctrine/migrations": "dev-master",
+        "monolog/monolog": "1.6.0",
+        "slim/views": "0.1.0",
+        "twig/twig": "v1.14.0",
+        "pagerfanta/pagerfanta": "v1.0.1",
+        "evenement/evenement": "v2.0.0",
+        "zircote/hal": "0.3.3"
+    },
+    "require-dev": {
+        "symfony/console": "v2.3.5",
+        "phing/phing": "2.6.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "EchaleGas": "src"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "chmod u+x bin/cli"
+        ],
+        "post-update-cmd": [
+            "chmod u+x bin/cli"
+        ]
+    }
+}
