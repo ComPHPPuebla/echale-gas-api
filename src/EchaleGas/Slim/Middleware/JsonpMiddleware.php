@@ -13,13 +13,18 @@ class JsonpMiddleware extends Middleware
      */
     public function call()
     {
+        if ('application/json' !== $this->app->request()->headers('Accept')) {
+
+            return; //Only JSON can be turned into JSONP
+        }
+
         $callback = $this->app->request()->get('callback');
 
         $this->next->call();
 
         if (empty($callback)) {
 
-            return;
+            return; //Not a JSONP request
         }
 
         $this->app->contentType('application/javascript');

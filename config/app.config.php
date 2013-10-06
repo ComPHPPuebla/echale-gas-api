@@ -1,5 +1,5 @@
 <?php
 return [
     'mode' => 'development',
-    'templates.path' => 'views',
+    'templates.path' => '../views',
 ];

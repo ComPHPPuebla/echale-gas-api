@@ -1,4 +1,6 @@
 <?php
+use EchaleGas\Twig\HalRendererExtension;
+
 use \Doctrine\DBAL\DriverManager;
 use \Doctrine\DBAL\Configuration;
 use \Monolog\Logger;
@@ -29,4 +31,7 @@ $app->view()->parserOptions = [
     'strict_variables' => false,
     'autoescape' => true
 ];
-$app->view()->parserExtensions = array(new TwigExtension());
+$app->view()->parserExtensions = [
+    new TwigExtension(),
+    new HalRendererExtension(),
+];

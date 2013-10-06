@@ -26,6 +26,10 @@ class ContentNegotiationMiddleware extends Middleware
      */
     public function call()
     {
+        if ($this->app->request()->isDelete() || $this->app->request()->isOptions()) {
+
+            return; //none of this request methods requires a  body
+        }
         $negotiator = new Negotiator();
 
         $format = $negotiator->getBest($this->app->request()->headers('Accept'));

@@ -3,19 +3,18 @@ require '../resources/stations.php';
 
 $app->get('/gas-stations', function() use ($app) {
 
-     $stations = $app->stationRepository->findAll();
-
+     $stations = $app->station->retrieveAll($app->request()->params());
      $app->contentType('application/json');
+     $app->render('station/list.json.twig', ['stations' => $stations]);
 
-     echo json_encode($stations, JSON_PRETTY_PRINT);
-});
+})->name('stations');
 
 $app->get('/gas-stations/:id', function($id) use ($app) {
 
     $station = $app->stationRepository->find($id);
 
     echo json_encode($station, JSON_PRETTY_PRINT);
-});
+})->name('station');
 
 $app->post('/gas-stations', function() use ($app) {
     parse_str($app->request()->getBody(), $newStation);
