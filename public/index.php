@@ -1,4 +1,6 @@
 <?php
+use EchaleGas\Repository\StationRepository;
+
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Configuration;
 use Slim\Slim;
@@ -11,6 +13,11 @@ $app->container->singleton('connection', function() {
     $config = new Configuration();
 
     return DriverManager::getConnection($dbOptions, $config);
+});
+
+$app->container->singleton('stationRepository', function() use ($app) {
+
+    return new StationRepository($app->connection);
 });
 
 require '../routes/stations.php';

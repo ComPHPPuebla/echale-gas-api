@@ -28,5 +28,10 @@
     },
     "require-dev": {
         "symfony/console": "v2.3.5"
+    },
+    "autoload": {
+        "psr-0": {
+            "EchaleGas": "src"
+        }
     }
 }

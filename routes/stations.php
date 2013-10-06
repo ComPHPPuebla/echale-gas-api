@@ -1,29 +1,43 @@
 <?php
 $app->get('/gas-station', function() use ($app) {
-     $connection = $app->connection;
 
-     $statement = $connection->prepare('SELECT * FROM stations');
-     $statement->execute();
-     $stations = $statement->fetchAll();
+     $stations = $app->stationRepository->findAll();
+
+     $app->contentType('application/json');
 
      echo json_encode($stations, JSON_PRETTY_PRINT);
 });
-// /gas-station/1/comments/2
-// /gas-station/1/
-$app->get('/gas-station/:id', function($id) {
- echo 'via GET with id = ' . $id;
+
+$app->get('/gas-station/:id', function($id) use ($app) {
+
+    $station = $app->stationRepository->find($id);
+
+    echo json_encode($station, JSON_PRETTY_PRINT);
 });
 
-$app->post('/gas-station/:id', function($id) {
-    echo 'Isaac';
+$app->post('/gas-station', function() use ($app) {
+    parse_str($app->request()->getBody(), $newStation);
+
+    $stationId = $app->stationRepository->insert($newStation);
+
+    $newStation['station_id'] = $stationId;
+
+    echo json_encode($newStation);
 });
 
-$app->put('/gas-station/:id', function($id) {
-    echo "via PUT with id = $id";
+$app->put('/gas-station/:id', function($id) use ($app) {
+    parse_str($app->request()->getBody(), $station);
+
+    $app->stationRepository->update($station, $id);
+
+    $station = $app->stationRepository->find($id);
+
+    echo json_encode($station);
 });
 
-$app->delete('/gas-station/:id', function($id) {
-    echo "via DELETE with id = $id";
+$app->delete('/gas-station/:id', function($id)  use ($app) {
+
+    $app->stationRepository->delete($id);
 });
 
 $app->options('/gas-station', function() {
