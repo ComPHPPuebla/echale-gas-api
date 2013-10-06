@@ -1,5 +1,7 @@
 <?php
-$app->get('/gas-station', function() use ($app) {
+require '../resources/stations.php';
+
+$app->get('/gas-stations', function() use ($app) {
 
      $stations = $app->stationRepository->findAll();
 
@@ -8,14 +10,14 @@ $app->get('/gas-station', function() use ($app) {
      echo json_encode($stations, JSON_PRETTY_PRINT);
 });
 
-$app->get('/gas-station/:id', function($id) use ($app) {
+$app->get('/gas-stations/:id', function($id) use ($app) {
 
     $station = $app->stationRepository->find($id);
 
     echo json_encode($station, JSON_PRETTY_PRINT);
 });
 
-$app->post('/gas-station', function() use ($app) {
+$app->post('/gas-stations', function() use ($app) {
     parse_str($app->request()->getBody(), $newStation);
 
     $stationId = $app->stationRepository->insert($newStation);
@@ -25,7 +27,7 @@ $app->post('/gas-station', function() use ($app) {
     echo json_encode($newStation);
 });
 
-$app->put('/gas-station/:id', function($id) use ($app) {
+$app->put('/gas-stations/:id', function($id) use ($app) {
     parse_str($app->request()->getBody(), $station);
 
     $app->stationRepository->update($station, $id);
@@ -35,11 +37,11 @@ $app->put('/gas-station/:id', function($id) use ($app) {
     echo json_encode($station);
 });
 
-$app->delete('/gas-station/:id', function($id)  use ($app) {
+$app->delete('/gas-stations/:id', function($id)  use ($app) {
 
     $app->stationRepository->delete($id);
 });
 
-$app->options('/gas-station', function() {
+$app->options('/gas-stations', function() {
     echo "via OPTIONS";
 });
