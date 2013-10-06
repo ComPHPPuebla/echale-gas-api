@@ -32,7 +32,8 @@
         "doctrine/migrations": "dev-master",
         "monolog/monolog": "1.6.0",
         "slim/views": "0.1.0",
-        "twig/twig": "v1.14.0"
+        "twig/twig": "v1.14.0",
+        "phing/phing": "2.6.1"
     },
     "require-dev": {
         "symfony/console": "v2.3.5"
@@ -41,5 +42,16 @@
         "psr-0": {
             "EchaleGas": "src"
         }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "chmod u+x bin/cli"
+        ],
+        "post-update-cmd": [
+            "chmod u+x bin/cli"
+        ]
     }
 }

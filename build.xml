@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="echalegas" description="Échale Gas (OpenData Puebla 2013)" default="app:reset-dev">
+    <!-- Download and install box for .phar packaging -->
+    <target name="app:install-box" description="Download and install Box file for .phar packaging">
+        <if>
+            <not>
+                 <available file="box.phar"/>
+            </not>
+            <then>
+                <echo msg="Installing Box for .phar packaging" />
+                <exec command="curl -s http://box-project.org/installer.php | php" />
+            </then>
+        </if>
+    </target>
+    
+    <!-- Create a .phar package for Doctrine migrations CLI interface -->
+    <target name="app:create-migrations-phar" description="Create Doctrine Migrations .phar file" depends="app:install-box">
+        <if>
+            <not>
+                 <available file="doctrine-migrations.phar"/>
+            </not>
+            <then>
+                <echo msg="Generating .phar file for managing Doctrine Migrations" />
+                <exec passthru="true" command="php box.phar build --configuration migrations-box.json --ansi -v" />
+            </then>
+        </if>
+    </target>
+    
+    <!-- Create all application's database -->
+    <target name="app:create-db" description="Create Échale Gas application's database">
+        <echo msg="Creating database" />
+        <exec passthru="true" command="php bin/cli dbal:database:create -v --ansi" />
+    </target>
+    
+    <!-- Drop the database (Use with caution, all data will deleted -->
+    <target name="app:drop-db" description="Drop Échale Gas application's database">
+        <echo msg="Dropping database" />
+        <exec passthru="true" command="php bin/cli dbal:database:drop --force --ansi" />
+    </target>
+    
+    <!-- Create database, create tables, and load initial data -->
+    <target name="app:run-migrations" description="Run EMS database migrations" depends="app:create-migrations-phar">
+        <echo msg="Execute migrations" />
+        <exec passthru="true" command="php doctrine-migrations.phar migrations:migrate --configuration migrations/migrations.xml --db-configuration config/mysql.config.php --no-interaction --ansi -v" />
+    </target>
+    
+    <!-- Install the application  -->
+    <target name="app:reset-dev" description="Reset the development environment">
+        <echo msg="Resetting development environment" />
+        <phingcall target="app:drop-db" />
+        <phingcall target="app:create-db" />
+        <phingcall target="app:run-migrations" />
+    </target>
+</project>
