@@ -1,6 +1,6 @@
 <?php
-use EchaleGas\Twig\HalRendererExtension;
-
+use \EchaleGas\Hypermedia\HAL\StationFormatter;
+use \EchaleGas\Twig\HalRendererExtension;
 use \Doctrine\DBAL\DriverManager;
 use \Doctrine\DBAL\Configuration;
 use \Monolog\Logger;

@@ -3,7 +3,7 @@ namespace EchaleGas\Resource;
 
 use \EchaleGas\Hypermedia\Formatter;
 
-class Resource
+class Resource extends BaseResource
 {
     /**
      * @var Formatter

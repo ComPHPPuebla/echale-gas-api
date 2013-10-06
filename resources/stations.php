@@ -1,4 +1,6 @@
 <?php
+use \Slim\Views\TwigExtension;
+use \EchaleGas\Hypermedia\HAL\StationFormatter;
 use \EchaleGas\Model\Station;
 use \EchaleGas\Event\QuerySpecificationEvent;
 use \EchaleGas\Doctrine\Query\PaginationFilter;
@@ -7,13 +9,20 @@ use \EchaleGas\Repository\StationRepository;
 use \Evenement\EventEmitter;
 
 $app->container->singleton('stationRepository', function() use ($app) {
+    $stationRepository = new StationRepository($app->connection);
+    $stationRepository->setEmitter($app->stationEmitter);
 
-    return new StationRepository($app->connection);
+    return $stationRepository;
 });
 
 $app->container->singleton('station', function() use ($app) {
 
-    return new Station($app->stationsRepository);
+    return new Station($app->stationRepository, $app->stationFormatter);
+});
+
+$app->container->singleton('stationFormatter', function() {
+
+    return new StationFormatter(new TwigExtension());
 });
 
 $app->container->singleton('stationEmitter', function() use ($app) {
@@ -21,11 +30,4 @@ $app->container->singleton('stationEmitter', function() use ($app) {
     $emitter->on('preFetchAll', new QuerySpecificationEvent(new PaginationFilter()));
 
     return $emitter;
-});
-
-$app->container->singleton('stationsRepository', function() use ($app) {
-    $stationRepository = $app->stationRepository;
-    $stationRepository->setEmitter($app->stationEmitter);
-
-    return $stationRepository;
 });

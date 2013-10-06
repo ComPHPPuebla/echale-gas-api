@@ -3,25 +3,12 @@ namespace EchaleGas\Resource;
 
 use \Pagerfanta\Pagerfanta;
 
-class ResourceCollection
+class ResourceCollection extends BaseResource
 {
-    /**
-     * @var Resource
-     */
-    protected $resource;
-
     /**
      * @var Pagerfanta
      */
     protected $paginator;
-
-    /**
-     * @param Resource $resource
-     */
-    public function setResource(Resource $resource)
-    {
-        $this->resource = $resource;
-    }
 
     /**
      * @param Pagerfanta $paginator
@@ -46,7 +33,7 @@ class ResourceCollection
 
         $embedded = array();
         foreach ($this->paginator->getCurrentPageResults() as $resource) {
-            $embedded[][$resourceName] = $this->resource->format($resource);
+            $embedded[][$resourceName] = $this->formatter->format($resource);
         }
 
         $halCollection['embedded'] = $embedded;
@@ -89,7 +76,7 @@ class ResourceCollection
 
     public function buildUrl($routeName, array $params)
     {
-        $baseUrl = $this->resource->getUrlHelper()->urlFor($routeName);
+        $baseUrl = $this->formatter->getUrlHelper()->urlFor($routeName);
 
         return $baseUrl . '?' . http_build_query($params);
     }
