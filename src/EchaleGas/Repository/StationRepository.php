@@ -16,7 +16,7 @@ class StationRepository extends BaseRepository
         $qb->select('*')
            ->from('stations', 's');
 
-        $this->emitter->emit('preFetchAll', [$qb, $params]);
+        $this->emitter->emit('configureFetchAll', [$qb, $params]);
 
         return $this->fetchAll($qb->getSQL());
     }

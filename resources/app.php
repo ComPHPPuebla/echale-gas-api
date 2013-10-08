@@ -1,6 +1,6 @@
 <?php
-use \EchaleGas\Hypermedia\HAL\StationFormatter;
 use \EchaleGas\Twig\HalRendererExtension;
+use \EchaleGas\Doctrine\Query\CanPaginate;
 use \Doctrine\DBAL\DriverManager;
 use \Doctrine\DBAL\Configuration;
 use \Monolog\Logger;
@@ -23,15 +23,28 @@ $app->container->singleton('log', function () {
     return $logger;
 });
 
-$app->view(new Twig());
-$app->view()->parserOptions = [
-    'charset' => 'utf-8',
-    'cache' => realpath('../views/cache'),
-    'auto_reload' => true,
-    'strict_variables' => false,
-    'autoescape' => true
-];
-$app->view()->parserExtensions = [
-    new TwigExtension(),
-    new HalRendererExtension(),
-];
+$app->container->singleton('canPaginateSpecification', function() use ($app) {
+
+    return new CanPaginate($app->config('defaultPageSize'));
+});
+
+$app->urlHelper = new TwigExtension();
+
+$app->container->singleton('twig', function () use ($app) {
+    $twig = new Twig();
+    $twig->parserOptions = [
+        'charset' => 'utf-8',
+        'cache' => realpath('../views/cache'),
+        'auto_reload' => true,
+        'strict_variables' => false,
+        'autoescape' => true
+    ];
+    $twig->parserExtensions = [
+        $app->urlHelper,
+        new HalRendererExtension(),
+    ];
+
+    return $twig;
+});
+
+$app->view($app->twig);

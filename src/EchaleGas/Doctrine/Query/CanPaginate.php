@@ -3,7 +3,7 @@ namespace EchaleGas\Doctrine\Query;
 
 use \Doctrine\DBAL\Query\QueryBuilder;
 
-class PaginationFilter extends BaseSpecification
+class CanPaginate extends BaseSpecification
 {
     /**
      * @var int
@@ -14,6 +14,14 @@ class PaginationFilter extends BaseSpecification
      * @var int
      */
     protected $pageSize;
+
+    /**
+     * @param int $defaultPageSize
+     */
+    public function __construct($defaultPageSize)
+    {
+        $this->pageSize = $defaultPageSize;
+    }
 
     /**
      * @return int
@@ -31,7 +39,6 @@ class PaginationFilter extends BaseSpecification
         if (isset($this->criteria['page'])) {
 
             $this->page = $this->criteria['page'];
-            $this->pageSize = 2; //Default size
 
             if (isset($this->criteria['page_size'])) {
 

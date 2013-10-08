@@ -8,7 +8,6 @@
  * file LICENSE.
  *
  * @author     LMV <luis.montealegre@mandragora-web.systems.com>
- * @copyright  Mandrágora Web-Based Systems 2013
  */
 require 'vendor/autoload.php';
 
@@ -26,7 +25,6 @@ use \EchaleGas\Doctrine\Command\DropDatabaseCommand;
  * Application's CLI
  *
  * @author     LMV <luis.montealegre@mandragora-web.systems.com>
- * @copyright  Mandrágora Web-Based Systems 2013
  */
 $cli = new Application('Échale Ganas Command Line Interface');
 $cli->setCatchExceptions(true);
