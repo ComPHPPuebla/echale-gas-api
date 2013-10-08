@@ -1,0 +1,9 @@
+/vendor/
+.buildpath
+.gitignore
+.project
+.settings/
+box.phar
+doctrine-migrations.phar
+/config/app.config.php
+/config/mysql.config.php
