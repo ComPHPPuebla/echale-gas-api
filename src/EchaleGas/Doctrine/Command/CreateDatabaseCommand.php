@@ -8,7 +8,6 @@
  * file LICENSE.
  *
  * @author     LMV <luis.montealegre@mandragora-web-systems.com>
- * @copyright  Mandrágora Web-Based Systems 2010
  */
 namespace EchaleGas\Doctrine\Command;
 
@@ -21,7 +20,6 @@ use \Doctrine\DBAL\DriverManager;
  * Create a database
  *
  * @author     LMV <luis.montealegre@mandragora-web-systems.com>
- * @copyright  Mandrágora Web-Based Systems 2010
  */
 class CreateDatabaseCommand extends Command
 {

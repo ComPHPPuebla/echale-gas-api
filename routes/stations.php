@@ -3,7 +3,10 @@ require '../resources/stations.php';
 
 $app->get('/gas-stations', function() use ($app) {
 
-     $stations = $app->station->retrieveAll($app->request()->params());
+     $stations = $app->station->retrieveAll(
+         $app->request()->params(), $app->config('defaultPageSize')
+     );
+
      $app->render('station/list.json.twig', ['stations' => $stations]);
 
 })->name('stations');

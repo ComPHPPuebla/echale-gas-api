@@ -48,7 +48,11 @@ class ResourceCollection extends BaseResource
      */
     protected function createPaginationLinks($resourceName, array $params)
     {
-        $this->paginator->setMaxPerPage(2);
+        if (!isset($params['page'])) {
+
+            return [];
+        }
+
         $this->paginator->setCurrentPage($params['page']);
 
         $links = array();
@@ -74,6 +78,11 @@ class ResourceCollection extends BaseResource
         return $links;
     }
 
+    /**
+     * @param string $routeName
+     * @param array $params
+     * @return string
+     */
     public function buildUrl($routeName, array $params)
     {
         $baseUrl = $this->formatter->getUrlHelper()->urlFor($routeName);
