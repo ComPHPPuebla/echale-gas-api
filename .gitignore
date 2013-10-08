@@ -1,8 +1,7 @@
-/vendor/
-.buildpath
-.gitignore
-.project
 .settings/
+.buildpath
+.project
+/vendor/
 box.phar
 doctrine-migrations.phar
 /config/app.config.php
