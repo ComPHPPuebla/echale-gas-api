@@ -29,7 +29,6 @@
         "doctrine/dbal": "v2.4.0",
         "willdurand/negotiation": "1.0.1",
         "vlucas/valitron": "1.1.4",
-        "doctrine/migrations": "dev-master",
         "monolog/monolog": "1.6.0",
         "slim/views": "0.1.0",
         "twig/twig": "v1.14.0",
@@ -39,6 +38,7 @@
     },
     "require-dev": {
         "symfony/console": "v2.3.5",
+        "doctrine/migrations": "dev-master",
         "phing/phing": "2.6.1"
     },
     "autoload": {

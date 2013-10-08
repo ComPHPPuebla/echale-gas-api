@@ -8,7 +8,6 @@
  * file LICENSE.
  *
  * @author     LMV <luis.montealegre@mandragora-web-systems.com>
- * @copyright  Mandrágora Web-Based Systems 2010
  */
 namespace EchaleGas\Doctrine\Command;
 
@@ -23,7 +22,6 @@ use \InvalidArgumentException;
  * Drop a database
  *
  * @author     LMV <luis.montealegre@mandragora-web-systems.com>
- * @copyright  Mandrágora Web-Based Systems 2010
  */
 class DropDatabaseCommand extends Command
 {

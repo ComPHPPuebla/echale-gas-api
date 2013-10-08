@@ -27,31 +27,36 @@
         </if>
     </target>
     
-    <!-- Create all application's database -->
+    <!-- Create application's database -->
     <target name="app:create-db" description="Create Échale Gas application's database">
         <echo msg="Creating database" />
         <exec passthru="true" command="php bin/cli dbal:database:create -v --ansi" />
     </target>
     
-    <!-- Drop the database (Use with caution, all data will deleted -->
+    <!-- Drop the database (Use with caution, all data will deleted) -->
     <target name="app:drop-db" description="Drop Échale Gas application's database">
         <echo msg="Dropping database" />
         <exec passthru="true" command="php bin/cli dbal:database:drop --force --ansi" />
     </target>
     
-    <!-- Create database, create tables, and load initial data -->
+    <!-- Run Doctrine's migrations -->
     <target name="app:run-migrations" description="Run EMS database migrations" depends="app:create-migrations-phar">
         <echo msg="Execute migrations" />
-        <exec passthru="true" command="php doctrine-migrations.phar migrations:migrate --configuration migrations/migrations.xml --db-configuration config/mysql.config.php --no-interaction --ansi -v" />
-        <echo msg="Inserts database" />
-        <exec passthru="true" command="./bin/cli dbal:import sql/insert.sql -v --ansi" /> 
+        <exec passthru="true" command="php doctrine-migrations.phar migrations:migrate --configuration migrations/migrations.xml --db-configuration ${db.config} --no-interaction --ansi -v" />
     </target>
     
-    <!-- Install the application  -->
+    <!-- Seed database  -->
+    <target name="app:seed-db" description="Seed database">
+        <echo msg="Load database data" />
+        <exec passthru="true" command="php bin/cli dbal:import ${db.seed} -v --ansi" />
+    </target>
+    
+    <!-- Install the application for development -->
     <target name="app:reset-dev" description="Reset the development environment">
         <echo msg="Resetting development environment" />
         <phingcall target="app:drop-db" />
         <phingcall target="app:create-db" />
         <phingcall target="app:run-migrations" />
+        <phingcall target="app:seed-db" />
     </target>
 </project>

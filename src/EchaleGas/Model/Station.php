@@ -1,9 +1,6 @@
 <?php
 namespace EchaleGas\Model;
 
-use EchaleGas\Hypermedia\Formatter;
-
-use \Slim\Views\TwigExtension;
 use \Pagerfanta\Adapter\FixedAdapter;
 use \Pagerfanta\Pagerfanta;
 use \EchaleGas\Resource\Resource;
@@ -19,14 +16,14 @@ class Station
     protected $stationRepository;
 
     /**
-     * @var Formatter
+     * @var StationFormatter
      */
     protected $formatter;
 
     /**
      * @param StationRepository $repository
      */
-    public function __construct(StationRepository $repository, Formatter $formatter)
+    public function __construct(StationRepository $repository, StationFormatter $formatter)
     {
         $this->stationRepository = $repository;
         $this->formatter = $formatter;
@@ -34,9 +31,10 @@ class Station
 
     /**
      * @param array $params
+     * @params array $pageSize
      * @return array
      */
-    public function retrieveAll(array $params)
+    public function retrieveAll(array $params, $pageSize)
     {
         $stations = new ResourceCollection($this->formatter);
 
@@ -44,6 +42,7 @@ class Station
             $this->stationRepository->count(), $this->stationRepository->findAll($params)
         );
         $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage($pageSize);
 
         $stations->setPaginator($paginator);
 
