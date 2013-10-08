@@ -10,7 +10,7 @@ use \Slim\Views\Twig;
 use \Slim\Views\TwigExtension;
 
 $app->container->singleton('connection', function() {
-    $dbOptions = require '../config/mysql.config.php';
+    $dbOptions = require 'config/mysql.config.php';
     $config = new Configuration();
 
     return DriverManager::getConnection($dbOptions, $config);
@@ -18,7 +18,7 @@ $app->container->singleton('connection', function() {
 
 $app->container->singleton('log', function () {
     $logger = new Logger('echale-gas');
-    $logger->pushHandler(new StreamHandler('../logs/app.log', LogLevel::DEBUG));
+    $logger->pushHandler(new StreamHandler('logs/app.log', LogLevel::DEBUG));
 
     return $logger;
 });
@@ -34,7 +34,7 @@ $app->container->singleton('twig', function () use ($app) {
     $twig = new Twig();
     $twig->parserOptions = [
         'charset' => 'utf-8',
-        'cache' => realpath('../views/cache'),
+        'cache' => realpath('views/cache'),
         'auto_reload' => true,
         'strict_variables' => false,
         'autoescape' => true

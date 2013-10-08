@@ -1,5 +1,5 @@
 <?php
-require '../resources/stations.php';
+require 'resources/stations.php';
 
 $app->get('/gas-stations', function() use ($app) {
 

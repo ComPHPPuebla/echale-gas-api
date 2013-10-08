@@ -6,3 +6,4 @@ box.phar
 doctrine-migrations.phar
 /config/app.config.php
 /config/mysql.config.php
+/bin/phing
