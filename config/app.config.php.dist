@@ -1,6 +1,7 @@
 <?php
 return [
     'mode' => 'development',
-    'templates.path' => '../views',
+    'log.enabled' => false,
+    'templates.path' => 'views',
     'defaultPageSize' => 10,
 ];

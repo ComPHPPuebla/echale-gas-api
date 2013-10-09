@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f880fe90038aa43b1269f05d2e50bd81",
+    "hash": "4789ff735f50d9271a6e8cf86a4a4b40",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -676,16 +676,16 @@
         },
         {
             "name": "slim/slim",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeguy/Slim.git",
-                "reference": "a9abd36d53d9c1f7732f490f8e809e55045307b3"
+                "reference": "bc5f5a80d9f89620ad1a15db57f6a6bc88c2d3a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeguy/Slim/zipball/a9abd36d53d9c1f7732f490f8e809e55045307b3",
-                "reference": "a9abd36d53d9c1f7732f490f8e809e55045307b3",
+                "url": "https://api.github.com/repos/codeguy/Slim/zipball/bc5f5a80d9f89620ad1a15db57f6a6bc88c2d3a6",
+                "reference": "bc5f5a80d9f89620ad1a15db57f6a6bc88c2d3a6",
                 "shasum": ""
             },
             "require": {
@@ -716,7 +716,7 @@
                 "rest",
                 "router"
             ],
-            "time": "2013-09-29 19:46:31"
+            "time": "2013-10-08 18:00:27"
         },
         {
             "name": "slim/views",
