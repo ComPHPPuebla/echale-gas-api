@@ -5,7 +5,7 @@ use \EchaleGas\Slim\Middleware\JsonpMiddleware;
 use \EchaleGas\Slim\Middleware\ContentNegotiationMiddleware;
 use \Slim\Slim;
 
-chdir(getcwd());
+chdir(__DIR__);
 
 require 'vendor/autoload.php';
 
