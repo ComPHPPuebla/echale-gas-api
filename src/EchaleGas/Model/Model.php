@@ -1,6 +1,8 @@
 <?php
 namespace EchaleGas\Model;
 
+use EchaleGas\Validator\Validator;
+
 use \EchaleGas\Hypermedia\Formatter;
 use \EchaleGas\Doctrine\Repository;
 use \EchaleGas\Resource\Resource;
@@ -45,41 +47,50 @@ class Model
         $this->options = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD'];
     }
 
-    public function retrieveAll(array $criteria, ResourceCollection $stations)
+    /**
+     * @param array $criteria
+     * @param ResourceCollection $resources
+     */
+    public function retrieveAll(array $criteria, ResourceCollection $resources)
     {
-        $stations->setFormatter($this->formatter);
-        $stations->setItems(
+        $resources->setFormatter($this->formatter);
+        $resources->setItems(
             $this->repository->findAll($criteria), $this->repository->count()
         );
 
-        return $stations->formatCollection($criteria, $this->routeName);
+        return $resources->formatCollection($criteria, $this->routeName);
     }
 
     /**
-     * @param int $stationId
+     * @param int $id
      * @param Resource $resource
      * @return array
      */
-    public function retrieveOne($stationId, Resource $resource)
+    public function retrieveOne($id, Resource $resource)
     {
-        $station = $this->repository->find($stationId);
+        $resourceValues = $this->repository->find($id);
+
+        if (!$resourceValues) {
+
+            return;
+        }
         $resource->setFormatter($this->formatter);
 
-        return $resource->format($station);
+        return $resource->format($resourceValues);
     }
 
     /**
-     * @param array $newStation
+     * @param array $newResource
      * @param Resource $resource
      * @return array
      */
-    public function create(array $newStation, Resource $resource)
+    public function create(array $newResource, Resource $resource)
     {
-        $stationId = $this->repository->insert($newStation);
-        $newStation = $this->repository->find($stationId);
+        $id = $this->repository->insert($newResource);
+        $newResource = $this->repository->find($id);
         $resource->setFormatter($this->formatter);
 
-        return $resource->format($newStation);
+        return $resource->format($newResource);
     }
 
     /**

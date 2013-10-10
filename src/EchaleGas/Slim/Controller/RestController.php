@@ -1,9 +1,11 @@
 <?php
 namespace EchaleGas\Slim\Controller;
 
+use \ReflectionMethod;
 use \Evenement\EventEmitter;
 use \EchaleGas\Model\Model;
 use \EchaleGas\Resource\Resource;
+use \EchaleGas\Validator\Validator;
 use \EchaleGas\Resource\ResourceCollection;
 
 class RestController extends SlimController
@@ -40,7 +42,13 @@ class RestController extends SlimController
      */
     public function get($id, Resource $resource)
     {
-        return $this->model->retrieveOne($id, $resource);
+        $resource = $this->model->retrieveOne($id, $resource);
+
+        if (!$resource) {
+            $this->response->status(404); //Not found
+        }
+
+        return $resource;
     }
 
     /**
@@ -56,9 +64,16 @@ class RestController extends SlimController
      * @param Resource $resource
      * @return array
      */
-    public function post(Resource $resource)
+    public function post(Resource $resource, Validator $validator)
     {
         parse_str($this->request->getBody(), $values);
+
+        if (!$validator->isValid($values)) {
+            $this->response->setStatus(400); //Bad request
+
+            return $validator->errors();
+        }
+
         $resource = $this->model->create($values, $resource);
         $this->response->setStatus(201); //Created
 
@@ -103,15 +118,15 @@ class RestController extends SlimController
     }
 
     /**
-     * @return mixed
+     * @param string $methodName
+     * @param array $params
+     * @return void
      */
-    public function dispatch()
+    public function dispatch($methodName, array $params)
     {
-        $params = func_get_args();
-        $method = array_shift($params);
+        $method = new ReflectionMethod(__CLASS__, $methodName);
+        $resource = $method->invokeArgs($this, $params);
 
-        $resource = call_user_func_array([$this, $method], $params);
-        //How to know when to render wether list or show templates?
         $this->emitter->emit('postDispatch', [
             'resource' => $resource, 'request' => $this->request, 'response' => $this->response
         ]);

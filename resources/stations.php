@@ -1,4 +1,6 @@
 <?php
+use EchaleGas\Validator\ValitronValidator;
+
 use \EchaleGas\Model\Model;
 use \EchaleGas\Hypermedia\HAL\StationFormatter;
 use \EchaleGas\Event\QuerySpecificationEvent;
@@ -22,6 +24,11 @@ $app->container->singleton('stationRepository', function() use ($app) {
     $stationRepository->setEmitter($app->stationEmitter);
 
     return $stationRepository;
+});
+
+$app->container->singleton('stationValidator', function() use ($app) {
+
+    return new ValitronValidator(require 'config/validations/stations.config.php');
 });
 
 $app->container->singleton('station', function() use ($app) {
