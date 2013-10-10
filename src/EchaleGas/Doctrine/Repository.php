@@ -4,7 +4,7 @@ namespace EchaleGas\Doctrine;
 use \Doctrine\DBAL\Connection;
 use \Evenement\EventEmitter;
 
-class BaseRepository
+class Repository
 {
     /**
      * @var Doctrine\DBAL\Connection

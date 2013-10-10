@@ -1,4 +1,6 @@
 <?php
+use EchaleGas\Slim\Hook\PhpSettingsHook;
+
 use \EchaleGas\Slim\Handler\ErrorHandler;
 use \EchaleGas\Slim\Handler\NotFoundHandler;
 use \EchaleGas\Slim\Middleware\JsonpMiddleware;
@@ -15,6 +17,7 @@ $app->notFound(new NotFoundHandler($app));
 $app->error(new ErrorHandler($app));
 $app->add(new ContentNegotiationMiddleware());
 $app->add(new JsonpMiddleware());
+$app->hook('slim.before', new PhpSettingsHook(require 'config/phpini.config.php'));
 
 require 'resources/app.php';
 require 'routes/stations.php';

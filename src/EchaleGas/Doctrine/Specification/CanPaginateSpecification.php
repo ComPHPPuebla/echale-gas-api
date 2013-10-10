@@ -1,9 +1,9 @@
 <?php
-namespace EchaleGas\Doctrine\Query;
+namespace EchaleGas\Doctrine\Specification;
 
 use \Doctrine\DBAL\Query\QueryBuilder;
 
-class CanPaginate extends BaseSpecification
+class CanPaginateSpecification extends QueryBuilderSpecification
 {
     /**
      * @var int
@@ -36,16 +36,22 @@ class CanPaginate extends BaseSpecification
      */
     public function match(QueryBuilder $qb)
     {
-        if (isset($this->criteria['page'])) {
+        if ($this->has('page')) {
 
-            $this->page = $this->criteria['page'];
-
-            if (isset($this->criteria['page_size'])) {
-
-                $this->pageSize = $this->criteria['page_size'];
-            }
-
+            $this->page = $this->get('page');
+            $this->initPageSize();
             $qb->setFirstResult($this->calculateOffset())->setMaxResults($this->pageSize);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function initPageSize()
+    {
+        if ($this->has('page_size')) {
+
+            $this->pageSize = $this->get('page_size');
         }
     }
 }

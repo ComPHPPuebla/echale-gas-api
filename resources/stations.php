@@ -1,8 +1,7 @@
 <?php
+use \EchaleGas\Model\Model;
 use \EchaleGas\Hypermedia\HAL\StationFormatter;
-use \EchaleGas\Model\Station;
 use \EchaleGas\Event\QuerySpecificationEvent;
-use \EchaleGas\Event\PaginationEvent;
 use \EchaleGas\Repository\StationRepository;
 use \Evenement\EventEmitter;
 
@@ -27,5 +26,11 @@ $app->container->singleton('stationRepository', function() use ($app) {
 
 $app->container->singleton('station', function() use ($app) {
 
-    return new Station($app->stationRepository, $app->stationFormatter);
+    return new Model($app->stationRepository, $app->stationFormatter, 'stations');
+});
+
+$app->container->singleton('stationController', function() use ($app) {
+    $app->controller->setModel($app->station);
+
+    return $app->controller;
 });

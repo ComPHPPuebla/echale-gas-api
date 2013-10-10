@@ -26,25 +26,36 @@ class ContentNegotiationMiddleware extends Middleware
      */
     public function call()
     {
-        if ($this->app->request()->isDelete() || $this->app->request()->isOptions()) {
+        if (!$this->responseShouldHaveBody()) {
 
-            return; //none of this request methods requires a  body
+            $this->next->call();
+
+            return;
         }
-        $negotiator = new Negotiator();
 
+        $negotiator = new Negotiator();
         $format = $negotiator->getBest($this->app->request()->headers('Accept'));
         $type = $format->getValue();
 
         if (in_array($type, $this->validContentTypes)) {
 
             $this->app->contentType($type);
-            $typeParts = explode('/', $type);
-            $this->app->viewExtension = array_pop($typeParts);
             $this->next->call();
 
             return;
         }
 
-        $this->app->halt(406); //Not acceptable
+        $this->app->status(406); //Not acceptable
+        $this->app->stop();
+    }
+
+    /**
+     * @return boolean
+     */
+    public function responseShouldHaveBody()
+    {
+        $request = $this->app->request();
+
+        return $request->isGet() || $request->isPost() || $request->isPut();
     }
 }

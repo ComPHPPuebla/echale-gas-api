@@ -15,6 +15,8 @@ class JsonpMiddleware extends Middleware
     {
         if ('application/json' !== $this->app->request()->headers('Accept')) {
 
+            $this->next->call();
+
             return; //Only JSON can be turned into JSONP
         }
 

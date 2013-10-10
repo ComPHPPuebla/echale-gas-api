@@ -1,35 +1,36 @@
 <?php
 namespace EchaleGas\Repository;
 
-use \EchaleGas\Doctrine\BaseRepository;
+use \EchaleGas\Repository\Repository;
 
-class StationRepository extends BaseRepository
+class StationRepository extends Repository
 {
     /**
-     * @param array $params
+     * @param array $criteria
      * @return array
      */
-    public function findAll(array $params = [])
+    public function findAll(array $criteria)
     {
         $qb = $this->createQueryBuilder();
 
-        $qb->select('*')
-           ->from('stations', 's');
+        $qb->select('*')->from('stations', 's');
 
-        $this->emitter->emit('configureFetchAll', [$qb, $params]);
+        $this->emitter->emit('configureFetchAll', [$qb, $criteria]);
 
         return $this->fetchAll($qb->getSQL());
     }
 
     /**
+     * @param array $stationValues
      * @return array
      */
-    public function insert($stationValues)
+    public function insert(array $stationValues)
     {
         return $this->doInsert('stations', $stationValues);
     }
 
     /**
+     * @param int
      * @return array
      */
     public function find($stationId)
@@ -45,14 +46,17 @@ class StationRepository extends BaseRepository
     }
 
     /**
+     * @param array $station
+     * @param int $stationId
      * @return void
      */
-    public function update($station, $stationId)
+    public function update(array $station, $stationId)
     {
         $this->doUpdate('stations', $station, ['station_id' => $stationId]);
     }
 
     /**
+     * @param int $stationId
      * @return void
      */
     public function delete($stationId)

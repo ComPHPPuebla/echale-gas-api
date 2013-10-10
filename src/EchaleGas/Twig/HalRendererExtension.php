@@ -66,6 +66,10 @@ class HalRendererExtension extends TwigExtension
      */
     public function renderXml(array $resource)
     {
-        return $this->process($resource)->getXML()->asXML();
+        $xml = $this->process($resource)->getXML();
+        $dom = dom_import_simplexml($xml)->ownerDocument;
+        $dom->formatOutput = true;
+
+        return $dom->saveXML();
     }
 }

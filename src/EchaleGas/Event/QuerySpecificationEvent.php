@@ -1,13 +1,14 @@
 <?php
 namespace EchaleGas\Event;
 
-use EchaleGas\Doctrine\Query\BaseSpecification;
-use Doctrine\DBAL\Query\QueryBuilder;
+use \EchaleGas\Doctrine\Specification\Criteria;
+use \EchaleGas\Doctrine\Specification\QueryBuilderSpecification;
+use \Doctrine\DBAL\Query\QueryBuilder;
 
 class QuerySpecificationEvent
 {
     /**
-     * @var BaseSpecification
+     * @var QueryBuilderSpecification
      */
     protected $specification;
 
@@ -15,7 +16,7 @@ class QuerySpecificationEvent
      * @param BaseSpecification $specification
      * @param array $criteria
      */
-    public function __construct(BaseSpecification $specification)
+    public function __construct(QueryBuilderSpecification $specification)
     {
         $this->specification = $specification;
     }

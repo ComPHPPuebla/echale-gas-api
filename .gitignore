@@ -6,5 +6,6 @@ box.phar
 doctrine-migrations.phar
 /config/app.config.php
 /config/mysql.config.php
+/config/phpini.config.php
 /bin/phing
 /public/index.php

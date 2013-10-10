@@ -1,39 +1,48 @@
 <?php
 namespace EchaleGas\Resource;
 
-use \Pagerfanta\Pagerfanta;
+use \EchaleGas\Paginator\Paginator;
 
-class ResourceCollection extends BaseResource
+class ResourceCollection extends Resource
 {
     /**
-     * @var Pagerfanta
+     * @var Paginator
      */
     protected $paginator;
 
     /**
-     * @param Pagerfanta $paginator
+     * @param Paginator $paginator
      */
-    public function setPaginator(Pagerfanta $paginator)
+    public function __construct(Paginator $paginator)
     {
         $this->paginator = $paginator;
+    }
+
+    /**
+     * @param array $items
+     * @param int $itemsCount
+     */
+    public function setItems(array $items, $itemsCount)
+    {
+        $this->paginator->setResults($items, $itemsCount);
     }
 
     /**
      * @param int   $count
      * @param array $collection
      * @param array $params
-     * @param string $resourceName
+     * @param string $routeName
      */
-    public function format(array $params, $resourceName)
+    public function formatCollection(array $params, $routeName)
     {
         $halCollection = array('links' => array());
 
-        $halCollection['links'] = $this->createPaginationLinks($resourceName, $params);
-        $halCollection['links']['self'] = $this->buildUrl($resourceName, $params);
+        $halCollection['links'] = $this->createPaginationLinks($routeName, $params);
+        $halCollection['links']['self'] = $this->buildUrl($routeName, $params);
 
         $embedded = array();
         foreach ($this->paginator->getCurrentPageResults() as $resource) {
-            $embedded[][$resourceName] = $this->formatter->format($resource);
+            $embedded[][$routeName] = $this->formatter->format($resource);
         }
 
         $halCollection['embedded'] = $embedded;
@@ -43,10 +52,10 @@ class ResourceCollection extends BaseResource
     }
 
     /**
-     * @param string   $resourceName
+     * @param string   $routeName
      * @param array $params
      */
-    protected function createPaginationLinks($resourceName, array $params)
+    protected function createPaginationLinks($routeName, array $params)
     {
         if (!isset($params['page'])) {
 
@@ -59,20 +68,20 @@ class ResourceCollection extends BaseResource
         if ($this->paginator->haveToPaginate()) {
 
             $params['page'] = 1;
-            $links['first'] = $this->buildUrl($resourceName, $params);
+            $links['first'] = $this->buildUrl($routeName, $params);
 
             if ($this->paginator->hasNextPage()) {
                 $params['page'] = $this->paginator->getNextPage();
-                $links['next'] = $this->buildUrl($resourceName, $params);
+                $links['next'] = $this->buildUrl($routeName, $params);
             }
 
             if ($this->paginator->hasPreviousPage()) {
                 $params['page'] = $this->paginator->getPreviousPage();
-                $links['prev'] = $this->buildUrl($resourceName, $params);
+                $links['prev'] = $this->buildUrl($routeName, $params);
             }
 
             $params['page'] = $this->paginator->getNbPages();
-            $links['last'] = $this->buildUrl($resourceName, $params);
+            $links['last'] = $this->buildUrl($routeName, $params);
         }
 
         return $links;
@@ -83,9 +92,9 @@ class ResourceCollection extends BaseResource
      * @param array $params
      * @return string
      */
-    public function buildUrl($routeName, array $params)
+    protected function buildUrl($routeName, array $params)
     {
-        $baseUrl = $this->formatter->getUrlHelper()->urlFor($routeName);
+        $baseUrl = $this->getUrlHelper()->site($this->getUrlHelper()->urlFor($routeName));
 
         return $baseUrl . '?' . http_build_query($params);
     }

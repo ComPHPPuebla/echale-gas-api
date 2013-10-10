@@ -1,9 +1,9 @@
 <?php
-namespace EchaleGas\Doctrine\Query;
+namespace EchaleGas\Doctrine\Specification;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 
-class ChainedSpecification implements BaseSpecification
+class ChainedSpecification extends QueryBuilderSpecification
 {
     /**
      * @var array
