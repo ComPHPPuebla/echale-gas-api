@@ -1,9 +1,10 @@
 <?php
-namespace EchaleGas\Resource;
+namespace EchaleGas\Hypermedia\Formatter\HAL;
 
+use \Slim\Views\TwigExtension;
 use \EchaleGas\Paginator\Paginator;
 
-class ResourceCollection extends Resource
+class CollectionFormatter extends Formatter
 {
     /**
      * @var Paginator
@@ -11,20 +12,20 @@ class ResourceCollection extends Resource
     protected $paginator;
 
     /**
-     * @param Paginator $paginator
+     * @var ResourceFormatter
      */
-    public function __construct(Paginator $paginator)
-    {
-        $this->paginator = $paginator;
-    }
+    protected $formatter;
 
     /**
-     * @param array $items
-     * @param int $itemsCount
+     * @param Paginator $paginator
      */
-    public function setItems(array $items, $itemsCount)
+    public function __construct(
+        TwigExtension $urlHelper, $routeName, Paginator $paginator, ResourceFormatter $formatter
+    )
     {
-        $this->paginator->setResults($items, $itemsCount);
+        parent::__construct($urlHelper, $routeName);
+        $this->paginator = $paginator;
+        $this->formatter = $formatter;
     }
 
     /**
@@ -33,22 +34,34 @@ class ResourceCollection extends Resource
      * @param array $params
      * @param string $routeName
      */
-    public function formatCollection(array $params, $routeName)
+    public function format(array $resources, array $params)
     {
-        $halCollection = array('links' => array());
+        $this->setResources($resources);
 
-        $halCollection['links'] = $this->createPaginationLinks($routeName, $params);
-        $halCollection['links']['self'] = $this->buildUrl($routeName, $params);
+        $halCollection = ['links' => []];
 
-        $embedded = array();
+        $halCollection['links'] = $this->createPaginationLinks($this->routeName, $params);
+        $halCollection['links']['self'] = $this->buildUrl($this->routeName, $params);
+
+        $embedded = [];
         foreach ($this->paginator->getCurrentPageResults() as $resource) {
-            $embedded[][$routeName] = $this->formatter->format($resource);
+            $embedded[][$this->routeName] = $this->formatter->format($resource, $params);
         }
 
         $halCollection['embedded'] = $embedded;
-        $halCollection['data'] = array();
+        $halCollection['data'] = [];
 
         return $halCollection;
+    }
+
+    /**
+     * @param array $items
+     */
+    protected function setResources(array $items)
+    {
+        $count = $items['count'];
+        unset($items['count']);
+        $this->paginator->setResults($items, $count);
     }
 
     /**
@@ -64,7 +77,7 @@ class ResourceCollection extends Resource
 
         $this->paginator->setCurrentPage($params['page']);
 
-        $links = array();
+        $links = [];
         if ($this->paginator->haveToPaginate()) {
 
             $params['page'] = 1;
@@ -94,7 +107,7 @@ class ResourceCollection extends Resource
      */
     protected function buildUrl($routeName, array $params)
     {
-        $baseUrl = $this->getUrlHelper()->site($this->getUrlHelper()->urlFor($routeName));
+        $baseUrl = $this->urlHelper->site($this->urlHelper->urlFor($routeName));
 
         return $baseUrl . '?' . http_build_query($params);
     }

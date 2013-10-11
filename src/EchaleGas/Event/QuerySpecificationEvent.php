@@ -1,9 +1,8 @@
 <?php
 namespace EchaleGas\Event;
 
-use \EchaleGas\Doctrine\Specification\Criteria;
+use \Zend\EventManager\Event;
 use \EchaleGas\Doctrine\Specification\QueryBuilderSpecification;
-use \Doctrine\DBAL\Query\QueryBuilder;
 
 class QuerySpecificationEvent
 {
@@ -25,9 +24,9 @@ class QuerySpecificationEvent
      * @param QueryBuilder $qb
      * @param array $criteria
      */
-    public function __invoke(QueryBuilder $qb, array $criteria)
+    public function __invoke(Event $event)
     {
-        $this->specification->setCriteria($criteria);
-        $this->specification->match($qb);
+        $this->specification->setCriteria($event->getParam('criteria'));
+        $this->specification->match($event->getParam('qb'));
     }
 }

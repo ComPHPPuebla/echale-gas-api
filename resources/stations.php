@@ -1,27 +1,37 @@
 <?php
-use EchaleGas\Validator\ValitronValidator;
-
+use \EchaleGas\Event\FormatResourceEvent;
+use \EchaleGas\Hypermedia\Formatter\HAL\CollectionFormatter;
+use \EchaleGas\Hypermedia\Formatter\HAL\ResourceFormatter;
+use \EchaleGas\Validator\ValitronValidator;
 use \EchaleGas\Model\Model;
-use \EchaleGas\Hypermedia\HAL\StationFormatter;
 use \EchaleGas\Event\QuerySpecificationEvent;
 use \EchaleGas\Repository\StationRepository;
-use \Evenement\EventEmitter;
+use \Zend\EventManager\EventManager;
 
 $app->container->singleton('stationFormatter', function() use ($app) {
 
-    return new StationFormatter($app->urlHelper);
+    return new ResourceFormatter($app->urlHelper, 'station', 'station_id');
 });
 
-$app->container->singleton('stationEmitter', function() use ($app) {
-    $emitter = new EventEmitter();
-    $emitter->on('configureFetchAll', new QuerySpecificationEvent($app->canPaginateSpecification));
+$app->container->singleton('stationsFormatter', function() use ($app) {
 
-    return $emitter;
+    return new CollectionFormatter(
+        $app->urlHelper, 'stations', $app->paginator, $app->stationFormatter
+    );
+});
+
+$app->container->singleton('stationEvents', function() use ($app) {
+    $eventManager = new EventManager();
+    $eventManager->attach(
+        'configureFetchAll', new QuerySpecificationEvent($app->canPaginateSpecification)
+    );
+
+    return $eventManager;
 });
 
 $app->container->singleton('stationRepository', function() use ($app) {
     $stationRepository = new StationRepository($app->connection);
-    $stationRepository->setEmitter($app->stationEmitter);
+    $stationRepository->setEventManager($app->stationEvents);
 
     return $stationRepository;
 });
@@ -33,11 +43,23 @@ $app->container->singleton('stationValidator', function() use ($app) {
 
 $app->container->singleton('station', function() use ($app) {
 
-    return new Model($app->stationRepository, $app->stationFormatter, 'stations');
+    return new Model($app->stationRepository, $app->stationValidator);
 });
 
 $app->container->singleton('stationController', function() use ($app) {
     $app->controller->setModel($app->station);
+    $app->controllerEvents->attach(
+        'postDispatch', new FormatResourceEvent($app->stationFormatter)
+    );
+
+    return $app->controller;
+});
+
+$app->container->singleton('stationsController', function() use ($app) {
+    $app->controller->setModel($app->station);
+    $app->controllerEvents->attach(
+        'postDispatch', new FormatResourceEvent($app->stationsFormatter)
+    );
 
     return $app->controller;
 });

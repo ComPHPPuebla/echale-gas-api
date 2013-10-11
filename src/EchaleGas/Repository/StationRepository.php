@@ -15,7 +15,9 @@ class StationRepository extends Repository
 
         $qb->select('*')->from('stations', 's');
 
-        $this->emitter->emit('configureFetchAll', [$qb, $criteria]);
+        $this->eventManager->trigger(
+            'configureFetchAll', $this, ['qb' => $qb, 'criteria' => $criteria]
+        );
 
         return $this->fetchAll($qb->getSQL());
     }
@@ -48,11 +50,13 @@ class StationRepository extends Repository
     /**
      * @param array $station
      * @param int $stationId
-     * @return void
+     * @return array
      */
     public function update(array $station, $stationId)
     {
         $this->doUpdate('stations', $station, ['station_id' => $stationId]);
+
+        return $this->find($stationId);
     }
 
     /**

@@ -33,7 +33,7 @@
         "slim/views": "0.1.0",
         "twig/twig": "v1.14.0",
         "pagerfanta/pagerfanta": "v1.0.1",
-        "evenement/evenement": "v2.0.0",
+        "zendframework/zend-eventmanager": "2.2.4",
         "zircote/hal": "0.3.3"
     },
     "require-dev": {

@@ -2,7 +2,7 @@
 namespace EchaleGas\Slim\Controller;
 
 use \ReflectionMethod;
-use \Evenement\EventEmitter;
+use \Zend\EventManager\EventManagerInterface;
 use \EchaleGas\Model\Model;
 use \EchaleGas\Resource\Resource;
 use \EchaleGas\Validator\Validator;
@@ -11,9 +11,9 @@ use \EchaleGas\Resource\ResourceCollection;
 class RestController extends SlimController
 {
     /**
-     * @var EventEmitter
+     * @var EventManagerInterface
      */
-    protected $emitter;
+    protected $eventManager;
 
     /**
      * @var Model
@@ -21,11 +21,15 @@ class RestController extends SlimController
     protected $model;
 
     /**
-     * @param EventEmitter $emitter
+     * @param EventManagerInterface $eventManager
      */
-    public function setEmitter(EventEmitter $emitter)
+    public function setEventManager(EventManagerInterface $eventManager)
     {
-        $this->emitter = $emitter;
+        $eventManager->setIdentifiers([
+            __CLASS__,
+            get_called_class(),
+        ]);
+        $this->eventManager = $eventManager;
     }
 
     /**
@@ -38,43 +42,35 @@ class RestController extends SlimController
 
     /**
      * @param int $id
-     * @param Resource $resource
      */
-    public function get($id, Resource $resource)
+    public function get($id)
     {
-        $resource = $this->model->retrieveOne($id, $resource);
-
-        if (!$resource) {
-            $this->response->status(404); //Not found
-        }
-
-        return $resource;
+        return $this->findById($id);
     }
 
     /**
      * @param ResourceCollection $collection
      * @return array
      */
-    public function getList(ResourceCollection $collection)
+    public function getList()
     {
-        return $this->model->retrieveAll($this->request->params(), $collection);
+        return $this->model->retrieveAll($this->request->params());
     }
 
     /**
      * @param Resource $resource
      * @return array
      */
-    public function post(Resource $resource, Validator $validator)
+    public function post()
     {
         parse_str($this->request->getBody(), $values);
 
-        if (!$validator->isValid($values)) {
-            $this->response->setStatus(400); //Bad request
+        if (!$this->validate($values)) {
 
-            return $validator->errors();
+            return $this->model->errors();
         }
 
-        $resource = $this->model->create($values, $resource);
+        $resource = $this->model->create($values);
         $this->response->setStatus(201); //Created
 
         return $resource;
@@ -85,11 +81,22 @@ class RestController extends SlimController
      * @param Resource $resource
      * @return array
      */
-    public function put($id, Resource $resource)
+    public function put($id)
     {
-        parse_str($this->request->getBody(), $station);
+        $resource = $this->findById($id);
+        if (!$resource) {
 
-        return $this->model->update($station, $id, $resource);
+            return;
+        }
+
+        parse_str($this->request->getBody(), $values);
+
+        if (!$this->validate(array_merge($resource, $values))) {
+
+            return $this->model->errors();
+        }
+
+        return $this->model->update($values, $id);
     }
 
     /**
@@ -97,6 +104,12 @@ class RestController extends SlimController
      */
     public function delete($id)
     {
+        $resource = $this->findById($id);
+        if (!$resource) {
+
+            return;
+        }
+
         $this->model->delete($id);
         $this->response->status(204); //No Content
     }
@@ -118,17 +131,42 @@ class RestController extends SlimController
     }
 
     /**
+     * @return array
+     */
+    protected function findById($id)
+    {
+        $resource = $this->model->retrieveOne($id);
+
+        if (!$resource) {
+            $this->response->status(404); //Not found
+        }
+
+        return $resource;
+    }
+
+    protected function validate(array $values)
+    {
+        $isValid = $this->model->isValid($values);
+        if (!$isValid) {
+            $this->response->setStatus(400); //Bad request
+        }
+
+        return $isValid;
+    }
+
+    /**
      * @param string $methodName
      * @param array $params
      * @return void
      */
-    public function dispatch($methodName, array $params)
+    public function dispatch($methodName, array $params = [])
     {
         $method = new ReflectionMethod(__CLASS__, $methodName);
         $resource = $method->invokeArgs($this, $params);
 
-        $this->emitter->emit('postDispatch', [
+        $argv = [
             'resource' => $resource, 'request' => $this->request, 'response' => $this->response
-        ]);
+        ];
+        $this->eventManager->trigger('postDispatch', $this, $argv);
     }
 }

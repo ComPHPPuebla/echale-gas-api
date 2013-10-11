@@ -2,7 +2,7 @@
 namespace EchaleGas\Doctrine;
 
 use \Doctrine\DBAL\Connection;
-use \Evenement\EventEmitter;
+use \Zend\EventManager\EventManagerInterface;
 
 class Repository
 {
@@ -12,9 +12,9 @@ class Repository
     protected $connection;
 
     /**
-     * @var \Evenement\EventEmitter
+     * @var EventManagerInterface
      */
-    protected $emitter;
+    protected $eventManager;
 
     /**
      * @param Connection $connection
@@ -25,11 +25,15 @@ class Repository
     }
 
     /**
-     * @param EventEmitter $emitter
+     * @param EventManagerInterface $eventManager
      */
-    public function setEmitter(EventEmitter $emitter)
+    public function setEventManager(EventManagerInterface $eventManager)
     {
-        $this->emitter = $emitter;
+        $eventManager->setIdentifiers([
+            __CLASS__,
+            get_called_class(),
+        ]);
+        $this->eventManager = $eventManager;
     }
 
     /**

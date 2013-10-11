@@ -1,14 +1,10 @@
 <?php
 namespace EchaleGas\Model;
 
-use EchaleGas\Validator\Validator;
-
-use \EchaleGas\Hypermedia\Formatter;
+use \EchaleGas\Validator\Validator;
 use \EchaleGas\Doctrine\Repository;
-use \EchaleGas\Resource\Resource;
-use \EchaleGas\Resource\ResourceCollection;
 
-class Model
+class Model implements Validator
 {
     /**
      * @var array
@@ -26,23 +22,17 @@ class Model
     protected $repository;
 
     /**
-     * @var Formatter
+     * @var Validator
      */
-    protected $formatter;
+    protected $validator;
 
     /**
-     * @var string
+     * @param Repository $repository
      */
-    protected $routeName;
-
-    /**
-     * @param StationRepository $repository
-     */
-    public function __construct(Repository $repository, Formatter $formatter, $routeName)
+    public function __construct(Repository $repository, Validator $validator)
     {
         $this->repository = $repository;
-        $this->formatter = $formatter;
-        $this->routeName = $routeName;
+        $this->validator = $validator;
         $this->optionsList = ['GET', 'POST', 'OPTIONS'];
         $this->options = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD'];
     }
@@ -51,14 +41,12 @@ class Model
      * @param array $criteria
      * @param ResourceCollection $resources
      */
-    public function retrieveAll(array $criteria, ResourceCollection $resources)
+    public function retrieveAll(array $criteria)
     {
-        $resources->setFormatter($this->formatter);
-        $resources->setItems(
-            $this->repository->findAll($criteria), $this->repository->count()
-        );
+        $collection = $this->repository->findAll($criteria);
+        $collection['count'] = $this->repository->count();
 
-        return $resources->formatCollection($criteria, $this->routeName);
+        return $collection;
     }
 
     /**
@@ -66,17 +54,9 @@ class Model
      * @param Resource $resource
      * @return array
      */
-    public function retrieveOne($id, Resource $resource)
+    public function retrieveOne($id)
     {
-        $resourceValues = $this->repository->find($id);
-
-        if (!$resourceValues) {
-
-            return;
-        }
-        $resource->setFormatter($this->formatter);
-
-        return $resource->format($resourceValues);
+        return $this->repository->find($id);
     }
 
     /**
@@ -84,28 +64,21 @@ class Model
      * @param Resource $resource
      * @return array
      */
-    public function create(array $newResource, Resource $resource)
+    public function create(array $newResource)
     {
         $id = $this->repository->insert($newResource);
-        $newResource = $this->repository->find($id);
-        $resource->setFormatter($this->formatter);
 
-        return $resource->format($newResource);
+        return $this->repository->find($id);
     }
 
     /**
-     * @param array $station
-     * @param int $stationId
-     * @param Resource $resource
+     * @param array $resourceValues
+     * @param int $id
      * @return array
      */
-    public function update(array $station, $stationId, Resource $resource)
+    public function update(array $resourceValues, $id)
     {
-        $this->repository->update($station, $stationId);
-        $station = $this->repository->find($stationId);
-        $resource->setFormatter($this->formatter);
-
-        return $resource->format($station);
+        return $this->repository->update($resourceValues, $id);
     }
 
     /**
@@ -114,5 +87,22 @@ class Model
     public function delete($stationId)
     {
         $this->repository->delete($stationId);
+    }
+
+    /**
+     * @param array $values
+     * @return boolean
+     */
+    public function isValid(array $values)
+    {
+        return $this->validator->isValid($values);
+    }
+
+    /**
+     * @return array
+     */
+    public function errors()
+    {
+        return $this->validator->errors();
     }
 }

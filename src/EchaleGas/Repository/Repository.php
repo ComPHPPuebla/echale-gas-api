@@ -26,7 +26,7 @@ abstract class Repository extends DoctrineRepository
     /**
      * @param array $values
      * @param int $id
-     * @return void
+     * @return array
      */
     abstract public function update(array $values, $id);
 

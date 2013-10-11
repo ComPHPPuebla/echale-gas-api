@@ -3,6 +3,7 @@ namespace EchaleGas\Event;
 
 use \Slim\Http\Response;
 use \Slim\Http\Request;
+use \Zend\EventManager\Event;
 use \Slim\View;
 
 class RenderViewEvent
@@ -25,8 +26,12 @@ class RenderViewEvent
      * @param Request $request
      * @param Response $response
      */
-    public function __invoke($resource, Request $request, Response $response)
+    public function __invoke(Event $event)
     {
+        $resource = $event->getParam('resource');
+        $response = $event->getParam('response');
+        $request = $event->getParam('request');
+
         if (400 === $response->getStatus()) {
             $this->renderErrors($resource, $response);
 
@@ -46,7 +51,7 @@ class RenderViewEvent
      */
     protected function responseNeedsBody(Request $request)
     {
-        return !$request->isHead() && !$request->isOptions();
+        return !$request->isHead() && !$request->isOptions() && !$request->isDelete();
     }
 
     /**

@@ -3,25 +3,25 @@ require 'resources/stations.php';
 
 $app->get('/gas-stations', function() use ($app) {
 
-    $app->stationController->dispatch('getList', [$app->resourceCollection]);
+    $app->stationsController->dispatch('getList');
 
 })->name('stations');
 
 $app->get('/gas-stations/:id', function($id) use ($app) {
 
-    $app->stationController->dispatch('get', [$id, $app->resource]);
+    $app->stationController->dispatch('get', [$id]);
 
 })->name('station');
 
 $app->post('/gas-stations', function() use ($app) {
 
-    $app->stationController->dispatch('post', [$app->resource, $app->stationValidator]);
+    $app->stationController->dispatch('post', []);
 
 });
 
 $app->put('/gas-stations/:id', function($id) use ($app) {
 
-    $app->stationController->dispatch('put', [$id, $app->resource]);
+    $app->stationController->dispatch('put', [$id]);
 
 });
 

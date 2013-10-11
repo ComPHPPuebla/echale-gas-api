@@ -1,10 +1,7 @@
 <?php
-use EchaleGas\Event\RenderViewEvent;
-
-use \Evenement\EventEmitter;
+use \EchaleGas\Event\RenderViewEvent;
+use \Zend\EventManager\EventManager;
 use \EchaleGas\Slim\Controller\RestController;
-use \EchaleGas\Resource\Resource;
-use \EchaleGas\Resource\ResourceCollection;
 use \EchaleGas\Paginator\PagerFantaPaginator;
 use \EchaleGas\Twig\HalRendererExtension;
 use \EchaleGas\Doctrine\Specification\CanPaginateSpecification;
@@ -37,16 +34,6 @@ $app->container->singleton('paginator', function() use ($app) {
     return $paginator;
 });
 
-$app->container->singleton('resourceCollection', function() use ($app) {
-
-    return new ResourceCollection($app->paginator);
-});
-
-$app->container->singleton('resource', function() {
-
-    return new Resource();
-});
-
 $app->container->singleton('canPaginateSpecification', function() use ($app) {
 
     return new CanPaginateSpecification($app->config('defaultPageSize'));
@@ -71,11 +58,16 @@ $app->container->singleton('twig', function () use ($app) {
     return $twig;
 });
 
+$app->container->singleton('controllerEvents', function() use ($app) {
+    $eventManager = new EventManager();
+    $eventManager->attach('postDispatch', new RenderViewEvent($app->twig), -100);
+
+    return $eventManager;
+});
+
 $app->container->singleton('controller', function() use ($app) {
     $controller = new RestController($app->request(), $app->response());
-    $emitter = new EventEmitter();
-    $emitter->on('postDispatch', new RenderViewEvent($app->twig));
-    $controller->setEmitter($emitter);
+    $controller->setEventManager($app->controllerEvents);
 
     return $controller;
 });
