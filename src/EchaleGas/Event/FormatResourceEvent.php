@@ -26,6 +26,11 @@ class FormatResourceEvent
      */
     public function __invoke(Event $event)
     {
+        if (400 === $event->getParam('response')->getStatus()) {
+
+            return; //A validation error occured
+        }
+
         $resource = $event->getParam('resource');
         if (empty($resource)) {
 

@@ -29,7 +29,7 @@ class ValitronValidator implements Validator
      */
     public function isValid(array $values)
     {
-        $this->validator = new Valitron($values);
+        $this->validator = new Valitron($values, [], 'en', 'config/validations');
         $this->validator->rules($this->rules);
 
         return $this->validator->validate();

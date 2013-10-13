@@ -144,6 +144,10 @@ class RestController extends SlimController
         return $resource;
     }
 
+    /**
+     * @param array $values
+     * @return boolean
+     */
     protected function validate(array $values)
     {
         $isValid = $this->model->isValid($values);

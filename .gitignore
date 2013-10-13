@@ -8,4 +8,6 @@ doctrine-migrations.phar
 /config/mysql.config.php
 /config/phpini.config.php
 /bin/phing
+/bin/phpunit
 /public/index.php
+
