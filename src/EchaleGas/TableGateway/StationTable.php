@@ -1,35 +1,38 @@
 <?php
-namespace EchaleGas\Repository;
+namespace EchaleGas\TableGateway;
 
-use \EchaleGas\Doctrine\BaseRepository;
+use ComPHPPuebla\Doctrine\TableGateway\Table;
 
-class StationRepository extends BaseRepository
+class StationTable extends Table
 {
     /**
-     * @param array $params
+     * @param array $criteria
      * @return array
      */
-    public function findAll(array $params = [])
+    public function findAll(array $criteria)
     {
         $qb = $this->createQueryBuilder();
 
-        $qb->select('*')
-           ->from('stations', 's');
+        $qb->select('*')->from('stations', 's');
 
-        $this->emitter->emit('configureFetchAll', [$qb, $params]);
+        $this->eventManager->trigger(
+            'configureFetchAll', $this, ['qb' => $qb, 'criteria' => $criteria]
+        );
 
         return $this->fetchAll($qb->getSQL());
     }
 
     /**
+     * @param array $stationValues
      * @return array
      */
-    public function insert($stationValues)
+    public function insert(array $stationValues)
     {
         return $this->doInsert('stations', $stationValues);
     }
 
     /**
+     * @param int
      * @return array
      */
     public function find($stationId)
@@ -45,14 +48,19 @@ class StationRepository extends BaseRepository
     }
 
     /**
-     * @return void
+     * @param array $station
+     * @param int $stationId
+     * @return array
      */
-    public function update($station, $stationId)
+    public function update(array $station, $stationId)
     {
         $this->doUpdate('stations', $station, ['station_id' => $stationId]);
+
+        return $this->find($stationId);
     }
 
     /**
+     * @param int $stationId
      * @return void
      */
     public function delete($stationId)
@@ -63,7 +71,7 @@ class StationRepository extends BaseRepository
     /**
      * return int
      */
-    public function count()
+    public function count(array $params = [])
     {
         $qb = $this->createQueryBuilder();
 

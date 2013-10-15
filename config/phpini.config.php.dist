@@ -1,0 +1,5 @@
+<?php
+return [
+    'html_errors' => 0,
+    'xdebug.overload_var_dump' => 0,
+];

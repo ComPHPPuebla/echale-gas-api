@@ -1,0 +1,6 @@
+{% if ('development' === mode) %}
+    Message: {{ exception.getMessage() }}
+    Stack trace: {{ exception.getTraceAsString() }}
+{% else %}
+    Message: An unexpected error has occured. The error has been reported.
+{% endif %}
