@@ -1,6 +1,10 @@
 <?php
-use \EchaleGas\Twig\HalRendererExtension;
-use \EchaleGas\Doctrine\Query\CanPaginate;
+use \ComPHPPuebla\Event\RenderViewEvent;
+use \ComPHPPuebla\Slim\Controller\RestController;
+use \ComPHPPuebla\Paginator\PagerFantaPaginator;
+use \ComPHPPuebla\Twig\HalRendererExtension;
+use \ComPHPPuebla\Doctrine\Specification\CanPaginateSpecification;
+use \Zend\EventManager\EventManager;
 use \Doctrine\DBAL\DriverManager;
 use \Doctrine\DBAL\Configuration;
 use \Monolog\Logger;
@@ -23,9 +27,16 @@ $app->container->singleton('log', function () {
     return $logger;
 });
 
+$app->container->singleton('paginator', function() use ($app) {
+    $paginator = new PagerFantaPaginator();
+    $paginator->setMaxPerPage($app->config('defaultPageSize'));
+
+    return $paginator;
+});
+
 $app->container->singleton('canPaginateSpecification', function() use ($app) {
 
-    return new CanPaginate($app->config('defaultPageSize'));
+    return new CanPaginateSpecification($app->config('defaultPageSize'));
 });
 
 $app->urlHelper = new TwigExtension();
@@ -45,6 +56,20 @@ $app->container->singleton('twig', function () use ($app) {
     ];
 
     return $twig;
+});
+
+$app->container->singleton('controllerEvents', function() use ($app) {
+    $eventManager = new EventManager();
+    $eventManager->attach('postDispatch', new RenderViewEvent($app->twig), -100);
+
+    return $eventManager;
+});
+
+$app->container->singleton('controller', function() use ($app) {
+    $controller = new RestController($app->request(), $app->response());
+    $controller->setEventManager($app->controllerEvents);
+
+    return $controller;
 });
 
 $app->view($app->twig);

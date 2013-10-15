@@ -1,8 +1,9 @@
 <?php
-use \EchaleGas\Slim\Handler\ErrorHandler;
-use \EchaleGas\Slim\Handler\NotFoundHandler;
-use \EchaleGas\Slim\Middleware\JsonpMiddleware;
-use \EchaleGas\Slim\Middleware\ContentNegotiationMiddleware;
+use \ComPHPPuebla\Slim\Hook\PhpSettingsHook;
+use \ComPHPPuebla\Slim\Handler\ErrorHandler;
+use \ComPHPPuebla\Slim\Handler\NotFoundHandler;
+use \ComPHPPuebla\Slim\Middleware\JsonpMiddleware;
+use \ComPHPPuebla\Slim\Middleware\ContentNegotiationMiddleware;
 use \Slim\Slim;
 
 chdir(__DIR__);
@@ -15,6 +16,7 @@ $app->notFound(new NotFoundHandler($app));
 $app->error(new ErrorHandler($app));
 $app->add(new ContentNegotiationMiddleware());
 $app->add(new JsonpMiddleware());
+$app->hook('slim.before', new PhpSettingsHook(require 'config/phpini.config.php'));
 
 require 'resources/app.php';
 require 'routes/stations.php';

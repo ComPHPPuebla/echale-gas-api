@@ -25,21 +25,15 @@
         }
     ],
     "require": {
-        "slim/slim": "2.3.3",
-        "doctrine/dbal": "v2.4.0",
-        "willdurand/negotiation": "1.0.1",
-        "vlucas/valitron": "1.1.4",
-        "monolog/monolog": "1.6.0",
-        "slim/views": "0.1.0",
-        "twig/twig": "v1.14.0",
-        "pagerfanta/pagerfanta": "v1.0.1",
-        "evenement/evenement": "v2.0.0",
-        "zircote/hal": "0.3.3"
+        "comphppuebla/restful-extensions": "0.0.2",
+        "monolog/monolog": "1.6.0"
     },
     "require-dev": {
         "symfony/console": "v2.3.5",
         "doctrine/migrations": "dev-master",
-        "phing/phing": "2.6.1"
+        "phing/phing": "2.6.1",
+        "phpunit/phpunit": "3.7.27",
+        "whatthejeff/nyancat-phpunit-resultprinter": "v1.1.0"
     },
     "autoload": {
         "psr-0": {
