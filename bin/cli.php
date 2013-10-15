@@ -18,8 +18,8 @@ use \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use \Doctrine\DBAL\Tools\Console\Command\RunSqlCommand;
 use \Doctrine\DBAL\Tools\Console\Command\ImportCommand;
 use \Doctrine\DBAL\DriverManager;
-use \EchaleGas\Doctrine\Command\CreateDatabaseCommand;
-use \EchaleGas\Doctrine\Command\DropDatabaseCommand;
+use \ComPHPPuebla\Doctrine\Command\CreateDatabaseCommand;
+use \ComPHPPuebla\Doctrine\Command\DropDatabaseCommand;
 
 /**
  * Application's CLI

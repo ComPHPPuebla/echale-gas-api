@@ -1,10 +1,10 @@
 <?php
-use \EchaleGas\Event\RenderViewEvent;
+use \ComPHPPuebla\Event\RenderViewEvent;
+use \ComPHPPuebla\Slim\Controller\RestController;
+use \ComPHPPuebla\Paginator\PagerFantaPaginator;
+use \ComPHPPuebla\Twig\HalRendererExtension;
+use \ComPHPPuebla\Doctrine\Specification\CanPaginateSpecification;
 use \Zend\EventManager\EventManager;
-use \EchaleGas\Slim\Controller\RestController;
-use \EchaleGas\Paginator\PagerFantaPaginator;
-use \EchaleGas\Twig\HalRendererExtension;
-use \EchaleGas\Doctrine\Specification\CanPaginateSpecification;
 use \Doctrine\DBAL\DriverManager;
 use \Doctrine\DBAL\Configuration;
 use \Monolog\Logger;

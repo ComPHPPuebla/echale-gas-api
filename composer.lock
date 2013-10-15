@@ -3,8 +3,58 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "1f8173889a82a4188a2cf2988599f869",
+    "hash": "01ceae70cc334b3d86d22438c14c32d4",
     "packages": [
+        {
+            "name": "comphppuebla/restful-extensions",
+            "version": "0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ComPHPPuebla/restful-extensions.git",
+                "reference": "73627ab31eb94c3c4e64b73b48e909b936b51197"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ComPHPPuebla/restful-extensions/zipball/73627ab31eb94c3c4e64b73b48e909b936b51197",
+                "reference": "73627ab31eb94c3c4e64b73b48e909b936b51197",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "v2.4.0",
+                "pagerfanta/pagerfanta": "v1.0.1",
+                "slim/slim": "2.3.3",
+                "slim/views": "0.1.0",
+                "twig/twig": "v1.14.0",
+                "vlucas/valitron": "1.1.4",
+                "willdurand/negotiation": "1.0.1",
+                "zendframework/zend-eventmanager": "2.2.4",
+                "zircote/hal": "0.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ComPHPPuebla": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luis Montealegre",
+                    "email": "luis.montealegre@mandragora-web-systems.com",
+                    "role": "developer"
+                },
+                {
+                    "name": "Misraim Mendoza",
+                    "email": "misraim.mendoza@mandragora-web-systems.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "Extensions to create a RESTful API",
+            "time": "2013-10-15 04:56:14"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.1.2",

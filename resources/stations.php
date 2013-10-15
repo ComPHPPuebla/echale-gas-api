@@ -1,11 +1,11 @@
 <?php
-use \EchaleGas\Event\FormatResourceEvent;
-use \EchaleGas\Hypermedia\Formatter\HAL\CollectionFormatter;
-use \EchaleGas\Hypermedia\Formatter\HAL\ResourceFormatter;
-use \EchaleGas\Validator\ValitronValidator;
-use \EchaleGas\Model\Model;
-use \EchaleGas\Event\QuerySpecificationEvent;
-use \EchaleGas\Repository\StationRepository;
+use \ComPHPPuebla\Event\FormatResourceEvent;
+use \ComPHPPuebla\Hypermedia\Formatter\HAL\CollectionFormatter;
+use \ComPHPPuebla\Hypermedia\Formatter\HAL\ResourceFormatter;
+use \ComPHPPuebla\Validator\ValitronValidator;
+use \ComPHPPuebla\Model\Model;
+use \ComPHPPuebla\Event\QuerySpecificationEvent;
+use \EchaleGas\TableGateway\StationTable;
 use \Zend\EventManager\EventManager;
 
 $app->container->singleton('stationFormatter', function() use ($app) {
@@ -29,11 +29,11 @@ $app->container->singleton('stationEvents', function() use ($app) {
     return $eventManager;
 });
 
-$app->container->singleton('stationRepository', function() use ($app) {
-    $stationRepository = new StationRepository($app->connection);
-    $stationRepository->setEventManager($app->stationEvents);
+$app->container->singleton('stationTable', function() use ($app) {
+    $stationTable = new StationTable($app->connection);
+    $stationTable->setEventManager($app->stationEvents);
 
-    return $stationRepository;
+    return $stationTable;
 });
 
 $app->container->singleton('stationValidator', function() use ($app) {
@@ -43,7 +43,7 @@ $app->container->singleton('stationValidator', function() use ($app) {
 
 $app->container->singleton('station', function() use ($app) {
 
-    return new Model($app->stationRepository, $app->stationValidator);
+    return new Model($app->stationTable, $app->stationValidator);
 });
 
 $app->container->singleton('stationController', function() use ($app) {

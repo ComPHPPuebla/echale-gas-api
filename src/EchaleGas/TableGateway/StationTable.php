@@ -1,9 +1,9 @@
 <?php
-namespace EchaleGas\Repository;
+namespace EchaleGas\TableGateway;
 
-use \EchaleGas\Repository\Repository;
+use ComPHPPuebla\Doctrine\TableGateway\Table;
 
-class StationRepository extends Repository
+class StationTable extends Table
 {
     /**
      * @param array $criteria
@@ -71,7 +71,7 @@ class StationRepository extends Repository
     /**
      * return int
      */
-    public function count()
+    public function count(array $params = [])
     {
         $qb = $this->createQueryBuilder();
 

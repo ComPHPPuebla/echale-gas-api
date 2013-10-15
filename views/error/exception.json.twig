@@ -1,5 +1,0 @@
-{% if ('development' === mode) %}
-    {{ {'exception': exception.getMessage(), 'trace': exception.getTraceAsString() }|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
-{% else %}
-    {{ {'message': 'An unexpected error has occured. The error has been reported.'}|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
-{% endif %}
