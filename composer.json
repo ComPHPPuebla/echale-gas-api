@@ -25,6 +25,7 @@
         }
     ],
     "require": {
+        "php": ">=5.4.0",
         "comphppuebla/restful-extensions": "0.0.2",
         "monolog/monolog": "1.6.0"
     },
