@@ -56,16 +56,17 @@
         <echo msg="Creating configuration files from .dist files" />
         <exec passthru="true" command="cp config/app.config.php.dist config/app.config.php" />
         <exec passthru="true" command="cp config/mysql.config.php.dist config/mysql.config.php" />
+        <exec passthru="true" command="cp config/phpini.config.php.dist config/phpini.config.php" />
         <exec passthru="true" command="cp public/index.php.dist public/index.php" />
     </target>
     
     <!-- Install the application for development -->
     <target name="app:reset-dev" description="Reset the development environment">
         <echo msg="Resetting development environment" />
+        <phingcall target="app:init-config-files" />
         <phingcall target="app:drop-db" />
         <phingcall target="app:create-db" />
         <phingcall target="app:run-migrations" />
         <phingcall target="app:seed-db" />
-        <phingcall target="app:init-config-files" />
     </target>
 </project>
