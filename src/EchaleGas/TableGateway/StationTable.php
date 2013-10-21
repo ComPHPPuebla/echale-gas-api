@@ -1,7 +1,8 @@
 <?php
 namespace EchaleGas\TableGateway;
 
-use ComPHPPuebla\Doctrine\TableGateway\Table;
+use \Doctrine\DBAL\Query\QueryBuilder;
+use \ComPHPPuebla\Doctrine\TableGateway\Table;
 
 class StationTable extends Table
 {
@@ -15,11 +16,11 @@ class StationTable extends Table
 
         $qb->select('*')->from('stations', 's');
 
-        $this->eventManager->trigger(
-            'configureFetchAll', $this, ['qb' => $qb, 'criteria' => $criteria]
+        $response = $this->eventManager->trigger(
+            'onFetchAll', $this, ['qb' => $qb, 'criteria' => $criteria]
         );
 
-        return $this->fetchAll($qb->getSQL());
+        return $response->first();
     }
 
     /**
@@ -69,15 +70,10 @@ class StationTable extends Table
     }
 
     /**
-     * return int
+     * @param QueryBuilder $qb
      */
-    public function count(array $params = [])
+    public function count(QueryBuilder $qb)
     {
-        $qb = $this->createQueryBuilder();
-
-        $qb->select('COUNT(*)')
-           ->from('stations', 's');
-
-        return $this->fetchColumn($qb->getSQL());
+         $qb->select('COUNT(*)');
     }
 }

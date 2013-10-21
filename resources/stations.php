@@ -1,5 +1,6 @@
 <?php
-use \ComPHPPuebla\Event\FormatResourceEvent;
+use \ComPHPPuebla\Slim\Controller\EventHandler\FormatResourceHandler;
+use \ComPHPPuebla\Doctrine\TableGateway\EventHandler\PaginationHandler;
 use \ComPHPPuebla\Hypermedia\Formatter\HAL\CollectionFormatter;
 use \ComPHPPuebla\Hypermedia\Formatter\HAL\ResourceFormatter;
 use \ComPHPPuebla\Validator\ValitronValidator;
@@ -15,17 +16,14 @@ $app->container->singleton('stationFormatter', function() use ($app) {
 
 $app->container->singleton('stationsFormatter', function() use ($app) {
 
-    return new CollectionFormatter(
-        $app->urlHelper, 'stations', $app->paginator, $app->stationFormatter
-    );
+    return new CollectionFormatter($app->urlHelper, 'stations', $app->stationFormatter);
 });
 
 $app->container->singleton('stationEvents', function() use ($app) {
     $eventManager = new EventManager();
     $eventManager->attach(
-        'configureFetchAll', new QuerySpecificationEvent($app->canPaginateSpecification)
+        'onFetchAll', new PaginationHandler($app->paginator), 1
     );
-
     return $eventManager;
 });
 
@@ -49,7 +47,7 @@ $app->container->singleton('station', function() use ($app) {
 $app->container->singleton('stationController', function() use ($app) {
     $app->controller->setModel($app->station);
     $app->controllerEvents->attach(
-        'postDispatch', new FormatResourceEvent($app->stationFormatter)
+        'postDispatch', new FormatResourceHandler($app->stationFormatter)
     );
 
     return $app->controller;
@@ -58,7 +56,7 @@ $app->container->singleton('stationController', function() use ($app) {
 $app->container->singleton('stationsController', function() use ($app) {
     $app->controller->setModel($app->station);
     $app->controllerEvents->attach(
-        'postDispatch', new FormatResourceEvent($app->stationsFormatter)
+        'postDispatch', new FormatResourceHandler($app->stationsFormatter), 2
     );
 
     return $app->controller;

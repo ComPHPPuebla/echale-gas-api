@@ -14,7 +14,7 @@ Para instalar Composer de forma global sigue las instrucciones de la
 
 O puedes instalar el proyecto usando Composer directamente:
 
-    composer create-project comphppuebla/echale-gas-api echale-gas-api 0.0.2
+    composer create-project comphppuebla/echale-gas-api echale-gas-api 0.0.3
 
 Para comenzar a hacer pruebas debes crear el usuario de desarrollo en MySQL.
 

@@ -1,7 +1,8 @@
 <?php
-use \ComPHPPuebla\Event\RenderViewEvent;
+use \ComPHPPuebla\Slim\Controller\EventHandler\RenderErrorsHandler;
+use \ComPHPPuebla\Slim\Controller\EventHandler\RenderResourceHandler;
 use \ComPHPPuebla\Slim\Controller\RestController;
-use \ComPHPPuebla\Paginator\PagerFantaPaginator;
+use \ComPHPPuebla\Paginator\PagerfantaPaginator;
 use \ComPHPPuebla\Twig\HalRendererExtension;
 use \ComPHPPuebla\Doctrine\Specification\CanPaginateSpecification;
 use \Zend\EventManager\EventManager;
@@ -28,10 +29,8 @@ $app->container->singleton('log', function () {
 });
 
 $app->container->singleton('paginator', function() use ($app) {
-    $paginator = new PagerFantaPaginator();
-    $paginator->setMaxPerPage($app->config('defaultPageSize'));
 
-    return $paginator;
+    return new PagerfantaPaginator($app->config('defaultPageSize'));
 });
 
 $app->container->singleton('canPaginateSpecification', function() use ($app) {
@@ -60,7 +59,9 @@ $app->container->singleton('twig', function () use ($app) {
 
 $app->container->singleton('controllerEvents', function() use ($app) {
     $eventManager = new EventManager();
-    $eventManager->attach('postDispatch', new RenderViewEvent($app->twig), -100);
+    // Ensure rendering is performed at the end by assigning a very low priority
+    $eventManager->attach('postDispatch', new RenderResourceHandler($app->twig), -100);
+    $eventManager->attach('renderErrors', new RenderErrorsHandler($app->twig), -100);
 
     return $eventManager;
 });

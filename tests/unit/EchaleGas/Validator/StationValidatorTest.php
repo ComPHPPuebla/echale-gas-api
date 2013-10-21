@@ -1,9 +1,10 @@
 <?php
 namespace EchaleGas\Validator;
 
+use \ComPHPPuebla\Validator\ValitronValidator;
 use \PHPUnit_Framework_TestCase as TestCase;
 
-class ValitronValidatorTest extends TestCase
+class StationValidatorTest extends TestCase
 {
     public function setUp()
     {
