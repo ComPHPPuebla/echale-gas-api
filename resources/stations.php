@@ -8,6 +8,7 @@ use \ComPHPPuebla\Model\Model;
 use \ComPHPPuebla\Event\QuerySpecificationEvent;
 use \EchaleGas\TableGateway\StationTable;
 use \Zend\EventManager\EventManager;
+use ComPHPPuebla\Proxy\CacheProxyFactory;
 
 $app->container->singleton('stationFormatter', function() use ($app) {
 
@@ -31,6 +32,11 @@ $app->container->singleton('stationTable', function() use ($app) {
     $stationTable = new StationTable($app->connection);
     $stationTable->setEventManager($app->stationEvents);
 
+    $cacheId = $app->request()->getPathInfo();
+    $factory = new CacheProxyFactory($app->cache, $cacheId, $app->proxiesConfiguration);
+
+    $stationTable = $factory->createProxy($stationTable, ['find']);
+
     return $stationTable;
 });
 
@@ -48,15 +54,6 @@ $app->container->singleton('stationController', function() use ($app) {
     $app->controller->setModel($app->station);
     $app->controllerEvents->attach(
         'postDispatch', new FormatResourceHandler($app->stationFormatter)
-    );
-
-    return $app->controller;
-});
-
-$app->container->singleton('stationsController', function() use ($app) {
-    $app->controller->setModel($app->station);
-    $app->controllerEvents->attach(
-        'postDispatch', new FormatResourceHandler($app->stationsFormatter), 2
     );
 
     return $app->controller;

@@ -20,6 +20,8 @@ class Version20131005185426 extends AbstractMigration
         $stations->addColumn('location', 'string', ['length' => 100]);
         $stations->addColumn('latitude', 'float');
         $stations->addColumn('longitude', 'float');
+        $stations->addColumn('created_at', 'datetime');
+        $stations->addColumn('last_updated_at', 'datetime');
         $stations->setPrimaryKey(['station_id']);
     }
 

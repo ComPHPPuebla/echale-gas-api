@@ -17,6 +17,11 @@ use \Symfony\Component\Console\Helper\DialogHelper;
 use \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use \Doctrine\DBAL\Tools\Console\Command\RunSqlCommand;
 use \Doctrine\DBAL\Tools\Console\Command\ImportCommand;
+use \Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand;
+use \Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
+use \Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand;
+use \Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand;
+use \Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand;
 use \Doctrine\DBAL\DriverManager;
 use \ComPHPPuebla\Doctrine\Command\CreateDatabaseCommand;
 use \ComPHPPuebla\Doctrine\Command\DropDatabaseCommand;
@@ -44,6 +49,12 @@ $cli->addCommands([
     // EchaleGas DBAL Commands
     new CreateDatabaseCommand(),
     new DropDatabaseCommand(),
+    // Migrations Commands
+    new ExecuteCommand(),
+    new GenerateCommand(),
+    new MigrateCommand(),
+    new StatusCommand(),
+    new VersionCommand(),
 ]);
 
 $cli->run();

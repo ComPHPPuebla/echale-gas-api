@@ -1,32 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="echalegas" description="Échale Gas (OpenData Puebla 2013)" default="app:reset-dev">
-    <!-- Download and install box for .phar packaging -->
-    <target name="app:install-box" description="Download and install Box file for .phar packaging">
-        <if>
-            <not>
-                 <available file="box.phar"/>
-            </not>
-            <then>
-                <echo msg="Installing Box for .phar packaging" />
-                <exec command="curl -s http://box-project.org/installer.php | php" />
-            </then>
-        </if>
-    </target>
-    
-    <!-- Create a .phar package for Doctrine migrations CLI interface -->
-    <target name="app:create-migrations-phar" description="Create Doctrine Migrations .phar file" depends="app:install-box">
-        <if>
-            <not>
-                 <available file="doctrine-migrations.phar"/>
-            </not>
-            <then>
-                <echo msg="Generating .phar file for managing Doctrine Migrations" />
-                <exec passthru="true" command="php box.phar build --configuration migrations-box.json --ansi -v" />
-            </then>
-        </if>
-    </target>
-    
+<project name="echalegas" description="Échale Gas (OpenData Puebla 2013)" default="app:reset-dev">  
     <!-- Create application's database -->
     <target name="app:create-db" description="Create Échale Gas application's database">
         <echo msg="Creating database" />
@@ -40,9 +14,9 @@
     </target>
     
     <!-- Run Doctrine's migrations -->
-    <target name="app:run-migrations" description="Run EMS database migrations" depends="app:create-migrations-phar">
+    <target name="app:run-migrations" description="Run EMS database migrations">
         <echo msg="Execute migrations" />
-        <exec passthru="true" command="php doctrine-migrations.phar migrations:migrate --configuration migrations/migrations.xml --db-configuration ${db.config} --no-interaction --ansi -v" />
+        <exec passthru="true" command="php bin/cli migrations:migrate --configuration migrations/migrations.xml --db-configuration ${db.config} --no-interaction --ansi -v" />
     </target>
     
     <!-- Seed database  -->

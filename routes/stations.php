@@ -3,7 +3,7 @@ require 'resources/stations.php';
 
 $app->get('/gas-stations', function() use ($app) {
 
-    $app->stationsController->getList();
+    $app->stationController->getList();
 
 })->name('stations');
 
