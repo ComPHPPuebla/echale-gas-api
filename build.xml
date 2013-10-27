@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="echalegas" description="Échale Gas (OpenData Puebla 2013)" default="app:reset-dev">  
+<project name="echalegas" description="Échale Gas (OpenData Puebla 2013)" default="app:reset-dev">
     <!-- Create application's database -->
     <target name="app:create-db" description="Create Échale Gas application's database">
         <echo msg="Creating database" />
