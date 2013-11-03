@@ -29,6 +29,8 @@ class StationTable extends Table
      */
     public function insert(array $stationValues)
     {
+        $this->eventManager->trigger('preInsert', $this, ['values' => &$stationValues]);
+
         return $this->doInsert('stations', $stationValues);
     }
 
@@ -55,6 +57,8 @@ class StationTable extends Table
      */
     public function update(array $station, $stationId)
     {
+        $this->eventManager->trigger('preUpdate', $this, ['values' => &$station]);
+
         $this->doUpdate('stations', $station, ['station_id' => $stationId]);
 
         return $this->find($stationId);

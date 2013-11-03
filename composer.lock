@@ -3,20 +3,20 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "25b0de31dc33742c06f2bc74816d4fbb",
+    "hash": "a777681f7d422a31c9f6dfabdeedf69c",
     "packages": [
         {
             "name": "comphppuebla/restful-extensions",
-            "version": "0.0.5",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ComPHPPuebla/restful-extensions.git",
-                "reference": "a8b2b638d4133a2077f2b8b00792b8ea5cb94742"
+                "reference": "9e66886654e9e2799c9a3ba06f665590959daf99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ComPHPPuebla/restful-extensions/zipball/a8b2b638d4133a2077f2b8b00792b8ea5cb94742",
-                "reference": "a8b2b638d4133a2077f2b8b00792b8ea5cb94742",
+                "url": "https://api.github.com/repos/ComPHPPuebla/restful-extensions/zipball/9e66886654e9e2799c9a3ba06f665590959daf99",
+                "reference": "9e66886654e9e2799c9a3ba06f665590959daf99",
                 "shasum": ""
             },
             "require": {
@@ -58,7 +58,7 @@
                 }
             ],
             "description": "Extensions to create RESTful APIs",
-            "time": "2013-10-27 18:20:21"
+            "time": "2013-11-03 06:04:44"
         },
         {
             "name": "doctrine/annotations",
@@ -1928,6 +1928,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "comphppuebla/restful-extensions": 20,
         "doctrine/migrations": 20
     },
     "platform": {

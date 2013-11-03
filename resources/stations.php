@@ -1,14 +1,15 @@
 <?php
 use \ComPHPPuebla\Slim\Controller\EventHandler\FormatResourceHandler;
-use \ComPHPPuebla\Doctrine\TableGateway\EventHandler\PaginationHandler;
+use \ComPHPPuebla\Doctrine\TableGateway\EventListener\PaginationListener;
+use \ComPHPPuebla\Doctrine\TableGateway\EventListener\HasTimestampListener;
 use \ComPHPPuebla\Hypermedia\Formatter\HAL\CollectionFormatter;
 use \ComPHPPuebla\Hypermedia\Formatter\HAL\ResourceFormatter;
+use \ComPHPPuebla\Proxy\CacheProxyFactory;
 use \ComPHPPuebla\Validator\ValitronValidator;
 use \ComPHPPuebla\Model\Model;
 use \ComPHPPuebla\Event\QuerySpecificationEvent;
 use \EchaleGas\TableGateway\StationTable;
 use \Zend\EventManager\EventManager;
-use ComPHPPuebla\Proxy\CacheProxyFactory;
 
 $app->container->singleton('stationFormatter', function() use ($app) {
 
@@ -22,9 +23,9 @@ $app->container->singleton('stationsFormatter', function() use ($app) {
 
 $app->container->singleton('stationEvents', function() use ($app) {
     $eventManager = new EventManager();
-    $eventManager->attach(
-        'onFetchAll', new PaginationHandler($app->paginator), 1
-    );
+    $eventManager->attach('onFetchAll', new PaginationListener($app->paginator));
+    $eventManager->attachAggregate(new HasTimestampListener());
+
     return $eventManager;
 });
 
@@ -35,7 +36,7 @@ $app->container->singleton('stationTable', function() use ($app) {
     $cacheId = $app->request()->getPathInfo();
     $factory = new CacheProxyFactory($app->cache, $cacheId, $app->proxiesConfiguration);
 
-    $stationTable = $factory->createProxy($stationTable, ['find']);
+    $stationTable = $factory->createProxy($stationTable);
 
     return $stationTable;
 });
