@@ -16,11 +16,11 @@ class StationTable extends Table
 
         $qb->select('*')->from('stations', 's');
 
-        $response = $this->eventManager->trigger(
+        $this->eventManager->trigger(
             'onFetchAll', $this, ['qb' => $qb, 'criteria' => $criteria]
         );
 
-        return $response->first();
+        return $qb;
     }
 
     /**
