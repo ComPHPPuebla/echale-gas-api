@@ -31,11 +31,11 @@ $app->container->singleton('stationEvents', function() use ($app) {
 
 $app->container->singleton('stationTable', function() use ($app) {
     $stationTable = new StationTable($app->connection);
-    $stationTable->setEventManager($app->stationEvents);
 
     $factory = new TableProxyFactory($app->proxiesConfiguration);
 
     $stationTable = $factory->createProxy($stationTable);
+    $factory->addEventManagement($stationTable, $app->stationEvents);
     $factory->addCaching($stationTable, $app->cache, $app->request()->getPathInfo());
     $factory->addPagination($stationTable, new PaginatorFactory($app->paginator));
 

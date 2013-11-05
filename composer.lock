@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ComPHPPuebla/restful-extensions.git",
-                "reference": "8ff8468c3de54735094469f57c2460f2ec2dd036"
+                "reference": "96f77ce4d5e040340fdbfd6ea329275f0085c05f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ComPHPPuebla/restful-extensions/zipball/8ff8468c3de54735094469f57c2460f2ec2dd036",
-                "reference": "8ff8468c3de54735094469f57c2460f2ec2dd036",
+                "url": "https://api.github.com/repos/ComPHPPuebla/restful-extensions/zipball/96f77ce4d5e040340fdbfd6ea329275f0085c05f",
+                "reference": "96f77ce4d5e040340fdbfd6ea329275f0085c05f",
                 "shasum": ""
             },
             "require": {
@@ -58,7 +58,7 @@
                 }
             ],
             "description": "Extensions to create RESTful APIs",
-            "time": "2013-11-04 16:14:04"
+            "time": "2013-11-05 05:30:06"
         },
         {
             "name": "doctrine/annotations",
