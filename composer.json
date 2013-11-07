@@ -26,7 +26,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "comphppuebla/restful-extensions": "dev-master",
+        "comphppuebla/restful-extensions": "0.0.6",
         "monolog/monolog": "1.6.0"
     },
     "require-dev": {
