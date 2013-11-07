@@ -3,20 +3,20 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "25b0de31dc33742c06f2bc74816d4fbb",
+    "hash": "a777681f7d422a31c9f6dfabdeedf69c",
     "packages": [
         {
             "name": "comphppuebla/restful-extensions",
-            "version": "0.0.5",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ComPHPPuebla/restful-extensions.git",
-                "reference": "a8b2b638d4133a2077f2b8b00792b8ea5cb94742"
+                "reference": "96f77ce4d5e040340fdbfd6ea329275f0085c05f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ComPHPPuebla/restful-extensions/zipball/a8b2b638d4133a2077f2b8b00792b8ea5cb94742",
-                "reference": "a8b2b638d4133a2077f2b8b00792b8ea5cb94742",
+                "url": "https://api.github.com/repos/ComPHPPuebla/restful-extensions/zipball/96f77ce4d5e040340fdbfd6ea329275f0085c05f",
+                "reference": "96f77ce4d5e040340fdbfd6ea329275f0085c05f",
                 "shasum": ""
             },
             "require": {
@@ -58,7 +58,7 @@
                 }
             ],
             "description": "Extensions to create RESTful APIs",
-            "time": "2013-10-27 18:20:21"
+            "time": "2013-11-05 05:30:06"
         },
         {
             "name": "doctrine/annotations",
@@ -1183,16 +1183,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations.git",
-                "reference": "90f5c393b907ca9b46e507def43735de959b77fc"
+                "reference": "0f5a110a1e6ae413e425912e6601643f91b069c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/90f5c393b907ca9b46e507def43735de959b77fc",
-                "reference": "90f5c393b907ca9b46e507def43735de959b77fc",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/0f5a110a1e6ae413e425912e6601643f91b069c1",
+                "reference": "0f5a110a1e6ae413e425912e6601643f91b069c1",
                 "shasum": ""
             },
             "require": {
-                "doctrine/dbal": ">=2.0,<2.5.x-dev",
+                "doctrine/dbal": "~2.0",
                 "php": ">=5.3.2"
             },
             "require-dev": {
@@ -1221,7 +1221,8 @@
                 {
                     "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
-                    "homepage": "http://www.jwage.com/"
+                    "homepage": "http://www.jwage.com/",
+                    "role": "Creator"
                 },
                 {
                     "name": "Benjamin Eberlei",
@@ -1234,7 +1235,7 @@
                 "database",
                 "migrations"
             ],
-            "time": "2013-10-23 14:44:19"
+            "time": "2013-11-03 20:54:43"
         },
         {
             "name": "phing/phing",
@@ -1928,6 +1929,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "comphppuebla/restful-extensions": 20,
         "doctrine/migrations": 20
     },
     "platform": {

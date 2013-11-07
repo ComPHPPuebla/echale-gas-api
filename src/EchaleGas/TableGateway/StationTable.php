@@ -16,20 +16,16 @@ class StationTable extends Table
 
         $qb->select('*')->from('stations', 's');
 
-        $response = $this->eventManager->trigger(
-            'onFetchAll', $this, ['qb' => $qb, 'criteria' => $criteria]
-        );
-
-        return $response->first();
+        return $qb;
     }
 
     /**
-     * @param array $stationValues
+     * @param array $values
      * @return array
      */
-    public function insert(array $stationValues)
+    public function insert(array $values)
     {
-        return $this->doInsert('stations', $stationValues);
+        return $this->doInsert('stations', $values);
     }
 
     /**
@@ -49,15 +45,15 @@ class StationTable extends Table
     }
 
     /**
-     * @param array $station
-     * @param int $stationId
+     * @param array $values
+     * @param int $id
      * @return array
      */
-    public function update(array $station, $stationId)
+    public function update(array $values, $id)
     {
-        $this->doUpdate('stations', $station, ['station_id' => $stationId]);
+        $this->doUpdate('stations', $values, ['station_id' => $id]);
 
-        return $this->find($stationId);
+        return $this->find($id);
     }
 
     /**

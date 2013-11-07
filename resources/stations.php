@@ -1,14 +1,16 @@
 <?php
 use \ComPHPPuebla\Slim\Controller\EventHandler\FormatResourceHandler;
-use \ComPHPPuebla\Doctrine\TableGateway\EventHandler\PaginationHandler;
+use \ComPHPPuebla\Doctrine\TableGateway\EventListener\PaginationListener;
+use \ComPHPPuebla\Doctrine\TableGateway\EventListener\HasTimestampListener;
+use \ComPHPPuebla\Doctrine\TableGateway\PaginatorFactory;
 use \ComPHPPuebla\Hypermedia\Formatter\HAL\CollectionFormatter;
 use \ComPHPPuebla\Hypermedia\Formatter\HAL\ResourceFormatter;
+use \ComPHPPuebla\Doctrine\TableGateway\TableProxyFactory;
 use \ComPHPPuebla\Validator\ValitronValidator;
 use \ComPHPPuebla\Model\Model;
 use \ComPHPPuebla\Event\QuerySpecificationEvent;
 use \EchaleGas\TableGateway\StationTable;
 use \Zend\EventManager\EventManager;
-use ComPHPPuebla\Proxy\CacheProxyFactory;
 
 $app->container->singleton('stationFormatter', function() use ($app) {
 
@@ -22,20 +24,20 @@ $app->container->singleton('stationsFormatter', function() use ($app) {
 
 $app->container->singleton('stationEvents', function() use ($app) {
     $eventManager = new EventManager();
-    $eventManager->attach(
-        'onFetchAll', new PaginationHandler($app->paginator), 1
-    );
+    $eventManager->attachAggregate(new HasTimestampListener());
+
     return $eventManager;
 });
 
 $app->container->singleton('stationTable', function() use ($app) {
     $stationTable = new StationTable($app->connection);
-    $stationTable->setEventManager($app->stationEvents);
 
-    $cacheId = $app->request()->getPathInfo();
-    $factory = new CacheProxyFactory($app->cache, $cacheId, $app->proxiesConfiguration);
+    $factory = new TableProxyFactory($app->proxiesConfiguration);
 
-    $stationTable = $factory->createProxy($stationTable, ['find']);
+    $stationTable = $factory->createProxy($stationTable);
+    $factory->addEventManagement($stationTable, $app->stationEvents);
+    $factory->addCaching($stationTable, $app->cache, $app->request()->getPathInfo());
+    $factory->addPagination($stationTable, new PaginatorFactory($app->paginator));
 
     return $stationTable;
 });
@@ -54,6 +56,15 @@ $app->container->singleton('stationController', function() use ($app) {
     $app->controller->setModel($app->station);
     $app->controllerEvents->attach(
         'postDispatch', new FormatResourceHandler($app->stationFormatter)
+    );
+
+    return $app->controller;
+});
+
+$app->container->singleton('stationsController', function() use ($app) {
+    $app->controller->setModel($app->station);
+    $app->controllerEvents->attach(
+        'postDispatch', new FormatResourceHandler($app->stationsFormatter)
     );
 
     return $app->controller;
