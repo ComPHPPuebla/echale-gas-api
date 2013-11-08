@@ -70,6 +70,6 @@ class StationTable extends Table
      */
     public function count(QueryBuilder $qb)
     {
-         $qb->select('COUNT(*)');
+         $qb->select('COUNT(*)')->resetQueryPart('orderBy');
     }
 }

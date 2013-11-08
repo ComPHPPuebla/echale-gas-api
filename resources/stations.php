@@ -2,6 +2,7 @@
 use \ComPHPPuebla\Slim\Controller\EventHandler\FormatResourceHandler;
 use \ComPHPPuebla\Doctrine\TableGateway\EventListener\PaginationListener;
 use \ComPHPPuebla\Doctrine\TableGateway\EventListener\HasTimestampListener;
+use \ComPHPPuebla\Doctrine\TableGateway\EventListener\QuerySpecificationListener;
 use \ComPHPPuebla\Doctrine\TableGateway\PaginatorFactory;
 use \ComPHPPuebla\Hypermedia\Formatter\HAL\CollectionFormatter;
 use \ComPHPPuebla\Hypermedia\Formatter\HAL\ResourceFormatter;
@@ -11,6 +12,7 @@ use \ComPHPPuebla\Model\Model;
 use \ComPHPPuebla\Event\QuerySpecificationEvent;
 use \EchaleGas\TableGateway\StationTable;
 use \Zend\EventManager\EventManager;
+use \EchaleGas\TableGateway\Specification\FilterByGeolocation;
 
 $app->container->singleton('stationFormatter', function() use ($app) {
 
@@ -24,6 +26,7 @@ $app->container->singleton('stationsFormatter', function() use ($app) {
 
 $app->container->singleton('stationEvents', function() use ($app) {
     $eventManager = new EventManager();
+    $eventManager->attach('postFindAll', new QuerySpecificationListener(new FilterByGeolocation()));
     $eventManager->attachAggregate(new HasTimestampListener());
 
     return $eventManager;
