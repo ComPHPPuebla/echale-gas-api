@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <messages>
-    {% for property, messages in errors['messages'] %}
-        <{{ property }}>
-            {% for message in messages %}
-                <message>{{ message }}</message>
-            {% endfor %}
-        </{{ property }}>
+{% for property, messages in errors['messages'] %}
+    <{{ property }}>
+    {% for message in messages %}
+        <message>{{ message }}</message>
     {% endfor %}
+    </{{ property }}>
+{% endfor %}
 </messages>
