@@ -1,6 +1,40 @@
 <?php
-$expectedStations = <<<JSON
+use \ApiGuy;
+use \ComPHPPuebla\Doctrine\DBAL\Fixture\Loader\YamlLoader;
+use \ComPHPPuebla\Doctrine\DBAL\Fixture\Persister\ConnectionPersister;
+use \Doctrine\DBAL\DriverManager;
+
+class GasStationsCest
 {
+    protected $connection;
+
+    public function __construct()
+    {
+        $params = [
+            'path' => __DIR__ . '/../../echalegas.sq3',
+            'user' => 'echalegasuser',
+            'password' => '3chal3g4sus3r!',
+            'driver' => 'pdo_sqlite',
+        ];
+        $this->connection = DriverManager::getConnection($params);
+    }
+
+    public function _before()
+    {
+        $this->connection->exec('DELETE FROM stations');
+        $loader = new YamlLoader(__DIR__ . '/../../fixtures/stations.yml');
+        $persister = new ConnectionPersister($this->connection);
+        $persister->persist($loader->load());
+    }
+
+    public function _after()
+    {
+    }
+
+    // tests
+    public function testListOfStationsIsShown(ApiGuy $i)
+    {
+        $expectedStations = '{
     "_links": {
         "self": {
             "href": "http:\/\/api.echalegas.dev\/gas-stations"
@@ -67,7 +101,7 @@ $expectedStations = <<<JSON
                 },
                 "station_id": 4,
                 "name": "GASOL ECOLOGIC POBLANO",
-                "social_reason": "GASOL ECOLOGICO POBLANO SA CV ",
+                "social_reason": "GASOL ECOLOGICO POBLANO SA CV",
                 "address_line_1": "C 26 SUR NO  709",
                 "address_line_2": "AZCARATE",
                 "location": "PUEBLA PUE",
@@ -113,11 +147,12 @@ $expectedStations = <<<JSON
         ]
     }
 }
-JSON;
-$i = new ApiGuy($scenario);
-$i->wantTo('List all the stations available in JSON format');
-$i->haveHttpHeader('Accept','application/json');
-$i->sendGET('/gas-stations');
-$i->seeResponseCodeIs(200);
-$i->seeResponseIsJson();
-$i->seeResponseContains($expectedStations);
+';
+        $i->wantTo('List all the available stations in JSON format');
+        $i->haveHttpHeader('Accept','application/json');
+        $i->sendGET('/gas-stations');
+        $i->seeResponseCodeIs(200);
+        $i->seeResponseIsJson();
+        $i->seeResponseContains($expectedStations);
+    }
+}

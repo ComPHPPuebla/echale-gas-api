@@ -34,7 +34,8 @@
         "doctrine/migrations": "dev-master",
         "phing/phing": "2.6.1",
         "phpunit/phpunit": "3.7.27",
-        "whatthejeff/nyancat-phpunit-resultprinter": "v1.1.0"
+        "whatthejeff/nyancat-phpunit-resultprinter": "v1.1.0",
+        "comphppuebla/dbal-fixtures": "0.1.*"
     },
     "autoload": {
         "psr-0": {
