@@ -43,4 +43,11 @@
         <phingcall target="app:run-migrations" />
         <phingcall target="app:seed-db" />
     </target>
+	<!-- Install the application for development -->
+    <target name="db:setup-testing" description="Initialize DB for functional testing">
+        <echo msg="Resetting development environment" />
+        <phingcall target="app:drop-db" />
+        <phingcall target="app:create-db" />
+        <phingcall target="app:run-migrations" />
+    </target>
 </project>

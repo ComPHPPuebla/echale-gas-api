@@ -1,0 +1,7 @@
+<?php
+return [
+    'path' => 'echalegas.db',
+    'user' => 'echalegasuser',
+    'password' => '3chal3g4sus3r!',
+    'driver' => 'pdo_sqlite',
+];

@@ -34,7 +34,7 @@ use \ComPHPPuebla\Doctrine\Command\DropDatabaseCommand;
 $cli = new Application('Échale Ganas Command Line Interface');
 $cli->setCatchExceptions(true);
 
-$connection = DriverManager::getConnection(require 'config/mysql.config.php');
+$connection = DriverManager::getConnection(require 'config/connection.config.php');
 
 $helperSet = new HelperSet();
 $helperSet->set(new DialogHelper(), 'dialog');

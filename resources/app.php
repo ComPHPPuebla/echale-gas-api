@@ -23,7 +23,7 @@ $app->container->singleton('cache', function() {
 });
 
 $app->container->singleton('connection', function() {
-    $dbOptions = require 'config/mysql.config.php';
+    $dbOptions = require 'config/connection.config.php';
     $config = new Configuration();
 
     return DriverManager::getConnection($dbOptions, $config);

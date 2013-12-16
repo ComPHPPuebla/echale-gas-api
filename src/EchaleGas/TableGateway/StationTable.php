@@ -7,15 +7,6 @@ use \ComPHPPuebla\Doctrine\TableGateway\Table;
 class StationTable extends Table
 {
     /**
-     * @param array $values
-     * @return array
-     */
-    public function insert(array $values)
-    {
-        return $this->doInsert($values);
-    }
-
-    /**
      * @param int
      * @return array
      */
