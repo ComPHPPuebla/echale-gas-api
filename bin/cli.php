@@ -25,6 +25,7 @@ use \Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand;
 use \Doctrine\DBAL\DriverManager;
 use \ComPHPPuebla\Doctrine\Command\CreateDatabaseCommand;
 use \ComPHPPuebla\Doctrine\Command\DropDatabaseCommand;
+use \ComPHPPuebla\Doctrine\Console\Command\LoadFixtureCommand;
 
 /**
  * Application's CLI
@@ -55,6 +56,8 @@ $cli->addCommands([
     new MigrateCommand(),
     new StatusCommand(),
     new VersionCommand(),
+    // Fixtures Commands
+    new LoadFixtureCommand(),
 ]);
 
 $cli->run();

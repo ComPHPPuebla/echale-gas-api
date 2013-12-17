@@ -7,22 +7,37 @@ El objetivo de la API es poder reportar gasolineras con mal servicio.
 Para instalar la aplicación tienes dos opciones: clonar la aplicación e instalar las dependencias
 con Composer:
 
-    composer install
+```bash
+$ composer install
+```
 
 Para instalar Composer de forma global sigue las instrucciones de la
 [documentación](http://getcomposer.org/doc/00-intro.md#globally).
 
 O puedes instalar el proyecto usando Composer directamente:
 
-    composer create-project comphppuebla/echale-gas-api echale-gas-api 0.0.4
+```bash
+$ composer create-project comphppuebla/echale-gas-api echale-gas-api 0.0.5
+```
 
 Para comenzar a hacer pruebas debes crear el usuario de desarrollo en MySQL.
 
-    GRANT ALL PRIVILEGES on echalegas.* TO echalegasuser@localhost IDENTIFIED BY '3chal3g4sus3r!';
+```sql
+GRANT ALL PRIVILEGES on echalegas.* TO echalegasuser@localhost IDENTIFIED BY '3chal3g4sus3r!';
+```
 
 Por último ejecuta el siguiente comando de [phing](http://www.phing.info/docs/guide/stable/)
 
-    ./bin/phing app:reset-dev -propertyfile build.properties -verbose
+```bash
+$ ./bin/phing app:reset-dev -propertyfile build.properties -verbose
+```
 
-Para hacer pruebas a la API puedes usar CURL, revisa por favor los ejemplos en la
-[wiki](https://github.com/ComPHPPuebla/echale-gas-api/wiki/Testing-con-curl).
+Puedes ejecutar los primeros test unitarios y funcionales con los siguiente comandos:
+
+```bash
+$ ./bin/phing db:setup-testing -verbose
+$ ./bin/phing test:all -verbose
+```
+
+Para hacer pruebas desde línea de comando a la API puedes usar CURL, revisa por favor los ejemplos
+en la [wiki](https://github.com/ComPHPPuebla/echale-gas-api/wiki/Testing-con-curl).

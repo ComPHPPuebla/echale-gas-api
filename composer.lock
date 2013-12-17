@@ -3,20 +3,20 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "fadaaba0a3f9102a8496ac5f13de23d9",
+    "hash": "10118546914c0edb2459d097793a70fe",
     "packages": [
         {
             "name": "comphppuebla/restful-extensions",
-            "version": "dev-master",
+            "version": "0.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ComPHPPuebla/restful-extensions.git",
-                "reference": "ba48c4bca5e86c5528b815311ef907332c028357"
+                "reference": "6fa4ab39007952f92d7803b367c6c36942ca4d35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ComPHPPuebla/restful-extensions/zipball/ba48c4bca5e86c5528b815311ef907332c028357",
-                "reference": "ba48c4bca5e86c5528b815311ef907332c028357",
+                "url": "https://api.github.com/repos/ComPHPPuebla/restful-extensions/zipball/6fa4ab39007952f92d7803b367c6c36942ca4d35",
+                "reference": "6fa4ab39007952f92d7803b367c6c36942ca4d35",
                 "shasum": ""
             },
             "require": {
@@ -59,7 +59,7 @@
                 }
             ],
             "description": "Extensions to create RESTful APIs",
-            "time": "2013-12-14 02:03:46"
+            "time": "2013-12-16 22:40:18"
         },
         {
             "name": "doctrine/annotations",
@@ -528,16 +528,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.6.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "f72392d0e6eb855118f5a84e89ac2d257c704abd"
+                "reference": "6225b22de9dcf36546be3a0b2fa8e3d986153f57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/f72392d0e6eb855118f5a84e89ac2d257c704abd",
-                "reference": "f72392d0e6eb855118f5a84e89ac2d257c704abd",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/6225b22de9dcf36546be3a0b2fa8e3d986153f57",
+                "reference": "6225b22de9dcf36546be3a0b2fa8e3d986153f57",
                 "shasum": ""
             },
             "require": {
@@ -545,21 +545,26 @@
                 "psr/log": "~1.0"
             },
             "require-dev": {
+                "aws/aws-sdk-php": "~2.4.8",
                 "doctrine/couchdb": "dev-master",
                 "mlehner/gelf-php": "1.0.*",
-                "raven/raven": "0.5.*"
+                "phpunit/phpunit": "~3.7.0",
+                "raven/raven": "0.5.*",
+                "ruflin/elastica": "0.90.*"
             },
             "suggest": {
+                "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
                 "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
                 "ext-mongo": "Allow sending log messages to a MongoDB server",
                 "mlehner/gelf-php": "Allow sending log messages to a GrayLog2 server",
-                "raven/raven": "Allow sending log messages to a Sentry server"
+                "raven/raven": "Allow sending log messages to a Sentry server",
+                "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.6.x-dev"
+                    "dev-master": "1.7.x-dev"
                 }
             },
             "autoload": {
@@ -586,7 +591,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2013-07-28 22:38:30"
+            "time": "2013-11-14 19:48:31"
         },
         {
             "name": "ocramius/proxy-manager",
@@ -1180,22 +1185,23 @@
     "packages-dev": [
         {
             "name": "comphppuebla/dbal-fixtures",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ComPHPPuebla/dbal-fixtures.git",
-                "reference": "a37d81195bcdbad47c952d2d0bcb81b8769305ce"
+                "reference": "69d58e4e25d62783e0df29515e92958935263ebc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ComPHPPuebla/dbal-fixtures/zipball/a37d81195bcdbad47c952d2d0bcb81b8769305ce",
-                "reference": "a37d81195bcdbad47c952d2d0bcb81b8769305ce",
+                "url": "https://api.github.com/repos/ComPHPPuebla/dbal-fixtures/zipball/69d58e4e25d62783e0df29515e92958935263ebc",
+                "reference": "69d58e4e25d62783e0df29515e92958935263ebc",
                 "shasum": ""
             },
             "require": {
                 "doctrine/dbal": "2.4.*",
                 "mustangostang/spyc": "0.5.*",
                 "php": ">=5.4.0",
+                "symfony/console": "2.4.*",
                 "zendframework/zend-config": "2.2.*"
             },
             "require-dev": {
@@ -1221,7 +1227,7 @@
                 }
             ],
             "description": "Fixtures managament with Doctrine DBAL",
-            "time": "2013-12-16 21:28:03"
+            "time": "2013-12-17 16:32:44"
         },
         {
             "name": "doctrine/migrations",
@@ -1628,16 +1634,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "3.7.27",
+            "version": "3.7.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "4b024e753e3421837afbcca962c8724c58b39376"
+                "reference": "3b97c8492bcafbabe6b6fbd2ab35f2f04d932a8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4b024e753e3421837afbcca962c8724c58b39376",
-                "reference": "4b024e753e3421837afbcca962c8724c58b39376",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3b97c8492bcafbabe6b6fbd2ab35f2f04d932a8d",
+                "reference": "3b97c8492bcafbabe6b6fbd2ab35f2f04d932a8d",
                 "shasum": ""
             },
             "require": {
@@ -1698,7 +1704,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2013-09-16 03:09:52"
+            "time": "2013-10-17 07:27:40"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1751,17 +1757,17 @@
         },
         {
             "name": "symfony/console",
-            "version": "v2.3.5",
+            "version": "v2.4.0",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "f880062d56edefb25b36f2defa65aafe65959dc7"
+                "reference": "3c1496ae96d24ccc6c340fcc25f71d7a1ab4c12c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/f880062d56edefb25b36f2defa65aafe65959dc7",
-                "reference": "f880062d56edefb25b36f2defa65aafe65959dc7",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/3c1496ae96d24ccc6c340fcc25f71d7a1ab4c12c",
+                "reference": "3c1496ae96d24ccc6c340fcc25f71d7a1ab4c12c",
                 "shasum": ""
             },
             "require": {
@@ -1776,7 +1782,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3-dev"
+                    "dev-master": "2.4-dev"
                 }
             },
             "autoload": {
@@ -1800,7 +1806,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2013-09-25 06:04:15"
+            "time": "2013-11-27 09:10:40"
         },
         {
             "name": "symfony/yaml",
@@ -1902,16 +1908,16 @@
         },
         {
             "name": "whatthejeff/nyancat-phpunit-resultprinter",
-            "version": "v1.1.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/whatthejeff/nyancat-phpunit-resultprinter.git",
-                "reference": "4df250b44295f90382c2385640a2db61ef6c87fd"
+                "reference": "ccfa266c1991bcde1cf590b3de808b3465ca9b1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/whatthejeff/nyancat-phpunit-resultprinter/zipball/4df250b44295f90382c2385640a2db61ef6c87fd",
-                "reference": "4df250b44295f90382c2385640a2db61ef6c87fd",
+                "url": "https://api.github.com/repos/whatthejeff/nyancat-phpunit-resultprinter/zipball/ccfa266c1991bcde1cf590b3de808b3465ca9b1d",
+                "reference": "ccfa266c1991bcde1cf590b3de808b3465ca9b1d",
                 "shasum": ""
             },
             "require": {
@@ -1933,7 +1939,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -1960,7 +1966,7 @@
                 "rainbow",
                 "tests"
             ],
-            "time": "2013-06-06 09:24:50"
+            "time": "2013-10-30 06:26:11"
         },
         {
             "name": "whatthejeff/nyancat-scoreboard",
@@ -2068,7 +2074,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "comphppuebla/restful-extensions": 20,
         "doctrine/migrations": 20
     },
     "platform": {
