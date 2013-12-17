@@ -16,7 +16,7 @@
     <!-- Run Doctrine's migrations -->
     <target name="app:run-migrations" description="Run EMS database migrations">
         <echo msg="Execute migrations" />
-        <exec passthru="true" command="php bin/cli migrations:migrate --configuration migrations/migrations.xml --db-configuration ${db.config} --no-interaction --ansi -v" />
+        <exec passthru="true" command="php bin/cli migrations:migrate --configuration migrations/migrations.xml --db-configuration config/connection.config.php --no-interaction --ansi -v" />
     </target>
     
     <!-- Seed database  -->
@@ -24,16 +24,17 @@
         <echo msg="Load database data" />
         <exec passthru="true" command="php bin/cli dbal:import ${db.seed} -v --ansi" />
     </target>
-    
+
     <!-- Initialize configuration files -->
     <target name="app:init-config-files" description="Initialize configuration files">
         <echo msg="Creating configuration files from .dist files" />
+        <property name="dbms.name" value="mysql" />
+        <phingcall target="db:switch-connection" />
         <exec passthru="true" command="cp config/app.config.php.dist config/app.config.php" />
-        <exec passthru="true" command="cp config/mysql.config.php.dist config/mysql.config.php" />
         <exec passthru="true" command="cp config/phpini.config.php.dist config/phpini.config.php" />
         <exec passthru="true" command="cp public/index.php.dist public/index.php" />
     </target>
-    
+
     <!-- Install the application for development -->
     <target name="app:reset-dev" description="Reset the development environment">
         <echo msg="Resetting development environment" />
@@ -43,11 +44,48 @@
         <phingcall target="app:run-migrations" />
         <phingcall target="app:seed-db" />
     </target>
-	<!-- Install the application for development -->
+
+   <!-- Switch database connection mysql/sqlite -->
+    <target name="db:switch-connection" description="Switch database connection mysql/sqlite">
+        <echo msg="Switching datbase configuration" />
+        <exec passthru="true" command="cp config/${dbms.name}.config.php.dist config/connection.config.php" />
+    </target>
+
+	<!-- Initialize Database for functional testing -->
     <target name="db:setup-testing" description="Initialize DB for functional testing">
-        <echo msg="Resetting development environment" />
+        <echo msg="Switching database for functional testing" />
+        <property name="dbms.name" value="sqlite" />
+        <phingcall target="db:switch-connection" />
         <phingcall target="app:drop-db" />
         <phingcall target="app:create-db" />
         <phingcall target="app:run-migrations" />
+    </target>
+
+    <!-- Execute functional tests -->
+    <target name="test:functional" description="Execute functional tests">
+        <if>
+            <not>
+                <available file='codecept.phar' />
+            </not>
+            <then>
+                <echo msg="Downloading codecept.phar" />
+                <exec passthru="true" command="wget http://codeception.com/codecept.phar" />
+            </then>
+        </if>
+        <echo msg="Running functional tests" />
+        <exec passthru="true" command="php codecept.phar run" />
+    </target>
+
+	<!-- Execute unit tests -->
+    <target name="test:unit" description="Execute unit tests">
+        <echo msg="Running unit tests" />
+        <exec passthru="true" command="bin/phpunit" />
+    </target>
+
+	<!-- Execute all the available tests -->
+    <target name="test:all" description="Execute all the available tests">
+        <echo msg="Running all test suites" />
+        <phingcall target="test:unit" />
+        <phingcall target="test:functional" />
     </target>
 </project>

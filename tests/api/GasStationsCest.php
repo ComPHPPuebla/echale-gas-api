@@ -10,12 +10,7 @@ class GasStationsCest
 
     public function __construct()
     {
-        $params = [
-            'path' => __DIR__ . '/../../echalegas.sq3',
-            'user' => 'echalegasuser',
-            'password' => '3chal3g4sus3r!',
-            'driver' => 'pdo_sqlite',
-        ];
+        $params = require __DIR__ . '/../../config/connection.config.php';
         $this->connection = DriverManager::getConnection($params);
     }
 

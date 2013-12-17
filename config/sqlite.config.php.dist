@@ -1,6 +1,6 @@
 <?php
 return [
-    'path' => 'echalegas.db',
+    'path' => 'echalegas.sq3',
     'user' => 'echalegasuser',
     'password' => '3chal3g4sus3r!',
     'driver' => 'pdo_sqlite',
