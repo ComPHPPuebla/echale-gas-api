@@ -1,14 +1,18 @@
 <?php
-use \ComPHPPuebla\Slim\Controller\EventHandler\FormatResourceHandler;
-use \ComPHPPuebla\Doctrine\TableGateway\EventHandler\PaginationHandler;
+use \ComPHPPuebla\Slim\Controller\EventListener\FormatResourceListener;
+use \ComPHPPuebla\Doctrine\TableGateway\EventListener\HasTimestampListener;
+use \ComPHPPuebla\Doctrine\TableGateway\EventListener\QuerySpecificationListener;
+use \ComPHPPuebla\Doctrine\TableGateway\EventListener\CacheListener;
+use \ComPHPPuebla\Doctrine\TableGateway\PaginatorFactory;
 use \ComPHPPuebla\Hypermedia\Formatter\HAL\CollectionFormatter;
 use \ComPHPPuebla\Hypermedia\Formatter\HAL\ResourceFormatter;
+use \ComPHPPuebla\Doctrine\TableGateway\TableProxyFactory;
 use \ComPHPPuebla\Validator\ValitronValidator;
 use \ComPHPPuebla\Model\Model;
 use \ComPHPPuebla\Event\QuerySpecificationEvent;
 use \EchaleGas\TableGateway\StationTable;
 use \Zend\EventManager\EventManager;
-use ComPHPPuebla\Proxy\CacheProxyFactory;
+use \EchaleGas\TableGateway\Specification\FilterByGeolocation;
 
 $app->container->singleton('stationFormatter', function() use ($app) {
 
@@ -22,20 +26,20 @@ $app->container->singleton('stationsFormatter', function() use ($app) {
 
 $app->container->singleton('stationEvents', function() use ($app) {
     $eventManager = new EventManager();
-    $eventManager->attach(
-        'onFetchAll', new PaginationHandler($app->paginator), 1
-    );
+    $eventManager->attach('postFindAll', new QuerySpecificationListener(new FilterByGeolocation()));
+    $eventManager->attachAggregate(new HasTimestampListener());
+    $eventManager->attachAggregate(new CacheListener($app->cache, $app->request()->getPathInfo()));
+
     return $eventManager;
 });
 
 $app->container->singleton('stationTable', function() use ($app) {
-    $stationTable = new StationTable($app->connection);
-    $stationTable->setEventManager($app->stationEvents);
+    $stationTable = new StationTable('stations', $app->connection);
 
-    $cacheId = $app->request()->getPathInfo();
-    $factory = new CacheProxyFactory($app->cache, $cacheId, $app->proxiesConfiguration);
+    $factory = new TableProxyFactory($app->proxiesConfiguration, $app->stationEvents);
 
-    $stationTable = $factory->createProxy($stationTable, ['find']);
+    $stationTable = $factory->createProxy($stationTable);
+    $factory->addEventManagement($stationTable);
 
     return $stationTable;
 });
@@ -47,13 +51,22 @@ $app->container->singleton('stationValidator', function() use ($app) {
 
 $app->container->singleton('station', function() use ($app) {
 
-    return new Model($app->stationTable, $app->stationValidator);
+    return new Model($app->stationTable, $app->stationValidator, $app->paginatorFactory);
 });
 
 $app->container->singleton('stationController', function() use ($app) {
     $app->controller->setModel($app->station);
     $app->controllerEvents->attach(
-        'postDispatch', new FormatResourceHandler($app->stationFormatter)
+        'postDispatch', new FormatResourceListener($app->stationFormatter)
+    );
+
+    return $app->controller;
+});
+
+$app->container->singleton('stationsController', function() use ($app) {
+    $app->controller->setModel($app->station);
+    $app->controllerEvents->attach(
+        'postDispatch', new FormatResourceListener($app->stationsFormatter)
     );
 
     return $app->controller;

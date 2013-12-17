@@ -1,0 +1,121 @@
+stations:
+    station_1:
+        name: "CASMEN GASOL"
+        social_reason: "CASMEN SA CV"
+        address_line_1: "23 PTE NO 711"
+        address_line_2: "EL CARMEN"
+        location: "PUEBLA PUE"
+        latitude: 19.03817
+        longitude: -98.20737
+        created_at: "2013-10-06 00:00:00"
+        last_updated_at: "2013-10-06 00:00:00"
+    station_2:
+        name: "COMBUSTIBLES JV"
+        social_reason: "COMBUSTIBLES JV SA CV"
+        address_line_1: "24 SUR NO 507"
+        address_line_2: "CENTRO"
+        location: "PUEBLA PUE"
+        latitude: 19.03492
+        longitude: -98.18554
+        created_at: "2013-10-06 00:00:00"
+        last_updated_at: "2013-10-06 00:00:00"
+    station_3:
+        name: "GAS LA POBLANITA"
+        social_reason: "GASOLINERA LA POBLANITA SA CV"
+        address_line_1: "2 PTE NO 1902"
+        address_line_2: "SAN ALEJANDRO"
+        location: "PUEBLA PUE"
+        latitude: 19.05226
+        longitude: -98.21158
+        created_at: "2013-10-06 00:00:00"
+        last_updated_at: "2013-10-06 00:00:00"
+    station_4:
+        name: "GASOL ECOLOGIC POBLANO"
+        social_reason: "GASOL ECOLOGICO POBLANO SA CV"
+        address_line_1: "C 26 SUR NO  709"
+        address_line_2: "AZCARATE"
+        location: "PUEBLA PUE"
+        latitude: 19.03348
+        longitude: -98.18496
+        created_at: "2013-10-06 00:00:00"
+        last_updated_at: "2013-10-06 00:00:00"
+    station_5:
+        name: "GASOL LA CAMIONERA"
+        social_reason: "SERV LA CAMIONERA PUEBLA SA CV"
+        address_line_1: "BLVD NTE NO 4210"
+        address_line_2: "LAS CUARTILLAS"
+        location: "PUEBLA PUE"
+        latitude: 19.07248
+        longitude: -98.2044
+        created_at: "2013-10-06 00:00:00"
+        last_updated_at: "2013-10-06 00:00:00"
+    station_6:
+        name: "GASOL LOS ANGELES"
+        social_reason: "GASOLINERA LOS ANGELES SA CV"
+        address_line_1: "AV 16 DE SEPTIEMBRE NO 4322"
+        address_line_2: "HUEXOTITLA"
+        location: "PUEBLA PUE"
+        latitude: 19.0265
+        longitude: -98.20896
+        created_at: "2013-10-06 00:00:00"
+        last_updated_at: "2013-10-06 00:00:00"
+    station_7:
+        name: "LITRO GAS"
+        social_reason: "LITRO GAS SA CV"
+        address_line_1: "PROL REFORMA NO 3914"
+        address_line_2: "REFORMA SUR"
+        location: "PUEBLA PUE"
+        latitude: 19.06023
+        longitude: -98.22614
+        created_at: "2013-10-06 00:00:00"
+        last_updated_at: "2013-10-06 00:00:00"
+    station_8:
+        name: "SERV 3 RIOS"
+        social_reason: "SERV TRES RIOS SA CV"
+        address_line_1: "11 NTE NO 3801"
+        address_line_2: "STA MARIA"
+        location: "PUEBLA PUE"
+        latitude: 19.06359
+        longitude: -98.19746
+        created_at: "2013-10-06 00:00:00"
+        last_updated_at: "2013-10-06 00:00:00"
+    station_9:
+        name: "SERV 3L"
+        social_reason: "SERVICIO 3L SA CV"
+        address_line_1: "AV REFORMA NO 2518 1"
+        address_line_2: "CENTRO"
+        location: "PUEBLA PUE"
+        latitude: 19.05468
+        longitude: -98.218
+        created_at: "2013-10-06 00:00:00"
+        last_updated_at: "2013-10-06 00:00:00"
+    station_10:
+        name: "SERV LA PIEDAD"
+        social_reason: "SERV LA PIEDAD SA CV"
+        address_line_1: "21 PTE NO 2329"
+        address_line_2: "PIEDAD"
+        location: "PUEBLA PUE"
+        latitude: 19.04582
+        longitude: -98.22091
+        created_at: "2013-10-06 00:00:00"
+        last_updated_at: "2013-10-06 00:00:00"
+    station_11:
+        name: "SERV SAN ALEJANDRO"
+        social_reason: "COMBUSTIBLES AJA SA CV"
+        address_line_1: "DIAG 10 PTE NO 2928"
+        address_line_2: "SAN ALEJANDRO"
+        location: "PUEBLA PUE"
+        latitude: 19.06052
+        longitude: -98.21748
+        created_at: "2013-10-06 00:00:00"
+        last_updated_at: "2013-10-06 00:00:00"
+    station_12:
+        name: "SERV VALSEQUILLO DEB"
+        social_reason: "SERVICIO VALSEQUILLO SA CV"
+        address_line_1: "BLVD VALSEQUILLO NO 624"
+        address_line_2: "SN BALTAZAR CAMPECHE"
+        location: "PUEBLA PUE"
+        latitude: 19.0109
+        longitude: -98.20816
+        created_at: "2013-10-06 00:00:00"
+        last_updated_at: "2013-10-06 00:00:00"

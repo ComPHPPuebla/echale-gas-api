@@ -7,32 +7,6 @@ use \ComPHPPuebla\Doctrine\TableGateway\Table;
 class StationTable extends Table
 {
     /**
-     * @param array $criteria
-     * @return array
-     */
-    public function findAll(array $criteria)
-    {
-        $qb = $this->createQueryBuilder();
-
-        $qb->select('*')->from('stations', 's');
-
-        $response = $this->eventManager->trigger(
-            'onFetchAll', $this, ['qb' => $qb, 'criteria' => $criteria]
-        );
-
-        return $response->first();
-    }
-
-    /**
-     * @param array $stationValues
-     * @return array
-     */
-    public function insert(array $stationValues)
-    {
-        return $this->doInsert('stations', $stationValues);
-    }
-
-    /**
      * @param int
      * @return array
      */
@@ -49,15 +23,15 @@ class StationTable extends Table
     }
 
     /**
-     * @param array $station
-     * @param int $stationId
+     * @param array $values
+     * @param int $id
      * @return array
      */
-    public function update(array $station, $stationId)
+    public function update(array $values, $id)
     {
-        $this->doUpdate('stations', $station, ['station_id' => $stationId]);
+        $this->doUpdate($values, ['station_id' => $id]);
 
-        return $this->find($stationId);
+        return $this->find($id);
     }
 
     /**
@@ -66,14 +40,31 @@ class StationTable extends Table
      */
     public function delete($stationId)
     {
-        $this->doDelete('stations', ['station_id' => $stationId]);
+        $this->doDelete(['station_id' => $stationId]);
     }
 
     /**
-     * @param QueryBuilder $qb
+     * @param array $criteria
+     * @return QueryBuilder
      */
-    public function count(QueryBuilder $qb)
+    protected function getQueryCount(array $criteria)
     {
-         $qb->select('COUNT(*)');
+        $qb = clone $this->getQueryFindAll($criteria);
+        $qb->select('COUNT(*)')->resetQueryPart('orderBy');
+
+        return $qb;
+    }
+
+    /**
+     * @param array $criteria
+     * @return QueryBuilder
+     */
+    protected function getQueryFindAll(array $criteria)
+    {
+        $qb = $this->createQueryBuilder();
+
+        $qb->select('*')->from('stations', 's');
+
+        return $qb;
     }
 }
