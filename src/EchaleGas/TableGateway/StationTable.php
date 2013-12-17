@@ -7,28 +7,6 @@ use \ComPHPPuebla\Doctrine\TableGateway\Table;
 class StationTable extends Table
 {
     /**
-     * @param array $criteria
-     * @return array
-     */
-    public function findAll(array $criteria)
-    {
-        $qb = $this->createQueryBuilder();
-
-        $qb->select('*')->from('stations', 's');
-
-        return $qb;
-    }
-
-    /**
-     * @param array $values
-     * @return array
-     */
-    public function insert(array $values)
-    {
-        return $this->doInsert('stations', $values);
-    }
-
-    /**
      * @param int
      * @return array
      */
@@ -51,7 +29,7 @@ class StationTable extends Table
      */
     public function update(array $values, $id)
     {
-        $this->doUpdate('stations', $values, ['station_id' => $id]);
+        $this->doUpdate($values, ['station_id' => $id]);
 
         return $this->find($id);
     }
@@ -62,14 +40,31 @@ class StationTable extends Table
      */
     public function delete($stationId)
     {
-        $this->doDelete('stations', ['station_id' => $stationId]);
+        $this->doDelete(['station_id' => $stationId]);
     }
 
     /**
-     * @param QueryBuilder $qb
+     * @param array $criteria
+     * @return QueryBuilder
      */
-    public function count(QueryBuilder $qb)
+    protected function getQueryCount(array $criteria)
     {
-         $qb->select('COUNT(*)');
+        $qb = clone $this->getQueryFindAll($criteria);
+        $qb->select('COUNT(*)')->resetQueryPart('orderBy');
+
+        return $qb;
+    }
+
+    /**
+     * @param array $criteria
+     * @return QueryBuilder
+     */
+    protected function getQueryFindAll(array $criteria)
+    {
+        $qb = $this->createQueryBuilder();
+
+        $qb->select('*')->from('stations', 's');
+
+        return $qb;
     }
 }

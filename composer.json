@@ -26,15 +26,16 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "comphppuebla/restful-extensions": "0.0.6",
-        "monolog/monolog": "1.6.0"
+        "comphppuebla/restful-extensions": "0.0.*",
+        "monolog/monolog": "1.7.*"
     },
     "require-dev": {
-        "symfony/console": "v2.3.5",
+        "symfony/console": "2.4.*",
         "doctrine/migrations": "dev-master",
-        "phing/phing": "2.6.1",
-        "phpunit/phpunit": "3.7.27",
-        "whatthejeff/nyancat-phpunit-resultprinter": "v1.1.0"
+        "phing/phing": "2.6.*",
+        "phpunit/phpunit": "3.7.*",
+        "whatthejeff/nyancat-phpunit-resultprinter": "1.2.*",
+        "comphppuebla/dbal-fixtures": "0.1.*"
     },
     "autoload": {
         "psr-0": {

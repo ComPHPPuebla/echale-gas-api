@@ -1,8 +1,10 @@
 <?php
-use \ComPHPPuebla\Slim\Controller\EventHandler\RenderErrorsHandler;
-use \ComPHPPuebla\Slim\Controller\EventHandler\RenderResourceHandler;
+use \ComPHPPuebla\Slim\Controller\EventListener\RenderResourceListener;
+use \ComPHPPuebla\Slim\Controller\EventListener\RenderErrorsListener;
 use \ComPHPPuebla\Slim\Controller\RestController;
+use \ComPHPPuebla\Slim\Controller\RestControllerProxyFactory;
 use \ComPHPPuebla\Paginator\PagerfantaPaginator;
+use \ComPHPPuebla\Paginator\PaginatorFactory;
 use \ComPHPPuebla\Twig\HalRendererExtension;
 use \Zend\EventManager\EventManager;
 use \Doctrine\DBAL\DriverManager;
@@ -21,7 +23,7 @@ $app->container->singleton('cache', function() {
 });
 
 $app->container->singleton('connection', function() {
-    $dbOptions = require 'config/mysql.config.php';
+    $dbOptions = require 'config/connection.config.php';
     $config = new Configuration();
 
     return DriverManager::getConnection($dbOptions, $config);
@@ -37,6 +39,11 @@ $app->container->singleton('log', function () {
 $app->container->singleton('paginator', function() use ($app) {
 
     return new PagerfantaPaginator($app->config('defaultPageSize'));
+});
+
+$app->container->singleton('paginatorFactory', function() use ($app) {
+
+    return new PaginatorFactory($app->paginator);
 });
 
 $app->container->singleton('proxiesConfiguration', function() use ($app) {
@@ -69,15 +76,17 @@ $app->container->singleton('twig', function () use ($app) {
 $app->container->singleton('controllerEvents', function() use ($app) {
     $eventManager = new EventManager();
     // Ensure rendering is performed at the end by assigning a very low priority
-    $eventManager->attach('postDispatch', new RenderResourceHandler($app->twig), -100);
-    $eventManager->attach('renderErrors', new RenderErrorsHandler($app->twig), -100);
+    $eventManager->attach('postDispatch', new RenderResourceListener($app->twig), -100);
+    $eventManager->attach('renderErrors', new RenderErrorsListener($app->twig), -100);
 
     return $eventManager;
 });
 
 $app->container->singleton('controller', function() use ($app) {
     $controller = new RestController($app->request(), $app->response());
-    $controller->setEventManager($app->controllerEvents);
+    $factory = new RestControllerProxyFactory($app->proxiesConfiguration, $app->controllerEvents);
+    $controller = $factory->createProxy($controller);
+    $factory->addEventManagement($controller);
 
     return $controller;
 });

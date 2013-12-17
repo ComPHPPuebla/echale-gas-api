@@ -1,13 +1,24 @@
+# IDE
 .settings/
 .buildpath
 .project
+
+# Composer
 /vendor/
-box.phar
-doctrine-migrations.phar
+
+# Configuration
 /config/app.config.php
-/config/mysql.config.php
+/config/connection.config.php
 /config/phpini.config.php
+
+# Binaries
 /bin/phing
 /bin/phpunit
-/public/index.php
 
+# .phar files
+codecept.phar
+
+# Others
+
+/public/index.php
+/echalegas.sq3
