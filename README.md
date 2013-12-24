@@ -17,7 +17,7 @@ Para instalar Composer de forma global sigue las instrucciones de la
 O puedes instalar el proyecto usando Composer directamente:
 
 ```bash
-$ composer create-project comphppuebla/echale-gas-api echale-gas-api 0.0.5
+$ composer create-project comphppuebla/echale-gas-api echale-gas-api 0.0.6
 ```
 
 Para comenzar a hacer pruebas debes crear el usuario de desarrollo en MySQL.
@@ -32,7 +32,7 @@ Por último ejecuta el siguiente comando de [phing](http://www.phing.info/docs/g
 $ ./bin/phing app:reset-dev -propertyfile build.properties -verbose
 ```
 
-Puedes ejecutar los primeros test unitarios y funcionales con los siguiente comandos:
+Puedes ejecutar los tests unitarios y funcionales con los siguiente comandos:
 
 ```bash
 $ ./bin/phing db:setup-testing -verbose
