@@ -7,16 +7,16 @@
     "packages": [
         {
             "name": "comphppuebla/restful-extensions",
-            "version": "0.0.7",
+            "version": "0.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ComPHPPuebla/restful-extensions.git",
-                "reference": "6fa4ab39007952f92d7803b367c6c36942ca4d35"
+                "reference": "3dc5e554d7ebe1305eed4cd4ec71a6944316199c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ComPHPPuebla/restful-extensions/zipball/6fa4ab39007952f92d7803b367c6c36942ca4d35",
-                "reference": "6fa4ab39007952f92d7803b367c6c36942ca4d35",
+                "url": "https://api.github.com/repos/ComPHPPuebla/restful-extensions/zipball/3dc5e554d7ebe1305eed4cd4ec71a6944316199c",
+                "reference": "3dc5e554d7ebe1305eed4cd4ec71a6944316199c",
                 "shasum": ""
             },
             "require": {
@@ -59,7 +59,7 @@
                 }
             ],
             "description": "Extensions to create RESTful APIs",
-            "time": "2013-12-16 22:40:18"
+            "time": "2013-12-24 06:40:59"
         },
         {
             "name": "doctrine/annotations",

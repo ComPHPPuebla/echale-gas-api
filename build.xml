@@ -46,8 +46,8 @@
     </target>
 
    <!-- Switch database connection mysql/sqlite -->
-    <target name="db:switch-connection" hidden="true" description="Switch database connection mysql/sqlite">
-        <echo msg="Switching datbase configuration" />
+    <target name="db:switch-connection" description="Switch database connection MySQL-SQLite" hidden="true">
+        <echo msg="Switching database configuration" />
         <exec passthru="true" command="cp config/${dbms.name}.config.php.dist config/connection.config.php" />
     </target>
 
