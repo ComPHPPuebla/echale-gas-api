@@ -47,7 +47,7 @@ class StationTable extends Table
      * @param array $criteria
      * @return QueryBuilder
      */
-    protected function getQueryCount(array $criteria)
+    public function getQueryCount(array $criteria)
     {
         $qb = clone $this->getQueryFindAll($criteria);
         $qb->select('COUNT(*)')->resetQueryPart('orderBy');
@@ -59,7 +59,7 @@ class StationTable extends Table
      * @param array $criteria
      * @return QueryBuilder
      */
-    protected function getQueryFindAll(array $criteria)
+    public function getQueryFindAll(array $criteria)
     {
         $qb = $this->createQueryBuilder();
 
