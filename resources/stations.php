@@ -1,17 +1,17 @@
 <?php
 use \ComPHPPuebla\Slim\Controller\EventListener\FormatResourceListener;
 use \ComPHPPuebla\Doctrine\TableGateway\EventListener\HasTimestampListener;
+use \ComPHPPuebla\Doctrine\TableGateway\Specification\ChainedSpecification;
+use ComPHPPuebla\Doctrine\TableGateway\Specification\PaginationSpecification;
 use \ComPHPPuebla\Doctrine\TableGateway\EventListener\QuerySpecificationListener;
 use \ComPHPPuebla\Doctrine\TableGateway\EventListener\CacheListener;
-use \ComPHPPuebla\Doctrine\TableGateway\PaginatorFactory;
 use \ComPHPPuebla\Hypermedia\Formatter\HAL\CollectionFormatter;
 use \ComPHPPuebla\Hypermedia\Formatter\HAL\ResourceFormatter;
 use \ComPHPPuebla\Doctrine\TableGateway\TableProxyFactory;
 use \ComPHPPuebla\Validator\ValitronValidator;
 use \ComPHPPuebla\Model\Model;
-use \ComPHPPuebla\Event\QuerySpecificationEvent;
-use \EchaleGas\TableGateway\StationTable;
 use \Zend\EventManager\EventManager;
+use \EchaleGas\TableGateway\StationTable;
 use \EchaleGas\TableGateway\Specification\FilterByGeolocation;
 
 $app->container->singleton('stationFormatter', function() use ($app) {
@@ -26,7 +26,12 @@ $app->container->singleton('stationsFormatter', function() use ($app) {
 
 $app->container->singleton('stationEvents', function() use ($app) {
     $eventManager = new EventManager();
-    $eventManager->attach('postFindAll', new QuerySpecificationListener(new FilterByGeolocation()));
+
+    $specification = new ChainedSpecification();
+    $specification->addSpecification(new PaginationSpecification($app->config('defaultPageSize')));
+    $specification->addSpecification(new FilterByGeolocation());
+    $eventManager->attach('postFindAll', new QuerySpecificationListener($specification));
+
     $eventManager->attachAggregate(new HasTimestampListener());
     $eventManager->attachAggregate(new CacheListener($app->cache, $app->request()->getPathInfo()));
 
