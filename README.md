@@ -17,7 +17,7 @@ Para instalar Composer de forma global sigue las instrucciones de la
 O puedes instalar el proyecto usando Composer directamente:
 
 ```bash
-$ composer create-project comphppuebla/echale-gas-api echale-gas-api 0.0.6
+$ composer create-project comphppuebla/echale-gas-api echale-gas-api 0.1.0
 ```
 
 Para comenzar a hacer pruebas debes crear el usuario de desarrollo en MySQL.
@@ -38,6 +38,11 @@ Puedes ejecutar los tests unitarios y funcionales con los siguiente comandos:
 $ ./bin/phing db:setup-testing -verbose
 $ ./bin/phing test:all -verbose
 ```
+
+Puedes probar la API y revisar la documentación en la carpeta `docs`. Suponiendo que tu host virtual
+es `api.echalegas.dev` la URL sería:
+
+    http://api.echalegas.dev/docs/ 
 
 Para hacer pruebas desde línea de comando a la API puedes usar CURL, revisa por favor los ejemplos
 en la [wiki](https://github.com/ComPHPPuebla/echale-gas-api/wiki/Testing-con-curl).

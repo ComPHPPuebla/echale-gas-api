@@ -35,11 +35,12 @@
         "phing/phing": "2.6.*",
         "phpunit/phpunit": "3.7.*",
         "whatthejeff/nyancat-phpunit-resultprinter": "1.2.*",
+        "zircote/swagger-php": "0.8.*",
         "comphppuebla/dbal-fixtures": "0.1.*"
     },
     "autoload": {
         "psr-0": {
-            "EchaleGas": "src"
+            "Api": "src"
         }
     },
     "config": {

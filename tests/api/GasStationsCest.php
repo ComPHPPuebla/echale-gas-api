@@ -20,7 +20,7 @@ class GasStationsCest
     public function _before()
     {
         $this->connection->exec('DELETE FROM stations');
-        $loader = new YamlLoader(__DIR__ . '/../../fixtures/stations.yml');
+        $loader = new YamlLoader(__DIR__ . '/../../data/fixtures/stations.yml');
         $persister = new ConnectionPersister($this->connection);
         $persister->persist($loader->load());
     }

@@ -16,7 +16,7 @@
     <!-- Run Doctrine's migrations -->
     <target name="app:run-migrations" description="Run EMS database migrations">
         <echo msg="Execute migrations" />
-        <exec passthru="true" command="php bin/cli migrations:migrate --configuration migrations/migrations.xml --db-configuration config/connection.config.php --no-interaction --ansi -v" />
+        <exec passthru="true" command="php bin/cli migrations:migrate --configuration data/migrations/migrations.xml --db-configuration config/connection.config.php --no-interaction --ansi -v" />
     </target>
     
     <!-- Seed database  -->
@@ -73,7 +73,7 @@
             </then>
         </if>
         <echo msg="Running functional tests" />
-        <exec passthru="true" command="php codecept.phar run" />
+        <exec passthru="true" command="php codecept.phar run --steps" />
     </target>
 
 	<!-- Execute unit tests -->
