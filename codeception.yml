@@ -1,6 +1,6 @@
 paths:
     tests: tests
-    log: tests/_log
+    log: tmp/logs
     data: tests/_data
     helpers: tests/_helpers
 settings:
@@ -9,10 +9,3 @@ settings:
     colors: true
     memory_limit: 1024M
     log: true
-modules:
-    config:
-        Db:
-            dsn: 'sqlite:echalegas.sq3'
-            user: 'echalegasuser'
-            password: '3chal3g4sus3r!'
-            dump: tests/_data/dump.sql

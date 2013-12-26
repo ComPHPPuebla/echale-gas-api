@@ -14,6 +14,7 @@
 # Binaries
 /bin/phing
 /bin/phpunit
+/bin/swagger
 
 # .phar files
 codecept.phar
@@ -21,4 +22,5 @@ codecept.phar
 # Others
 
 /public/index.php
+/public/docs/index.php
 /echalegas.sq3
