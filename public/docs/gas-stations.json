@@ -1,5 +1,5 @@
 {
-    "basePath": "http://echalegas.comunidadphppuebla.com/api",
+    "basePath": "http://api.echalegas.dev",
     "swaggerVersion": "1.2",
     "apiVersion": "0.1",
     "resourcePath": "/gas-stations",
@@ -11,7 +11,7 @@
                     "method": "GET",
                     "summary": "Find all the available gas stations",
                     "nickname": "getGasStations",
-                    "type": "GasStation",
+                    "type": "array[GasStation]",
                     "parameters": [
                         {
                             "paramType": "header",
@@ -77,6 +77,55 @@
                                 "application/json",
                                 "application/xml"
                             ]
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "name",
+                            "type": "string",
+                            "required": true,
+                            "description": "The name of the new gas station"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "social_reason",
+                            "type": "string",
+                            "required": true,
+                            "description": "The legal name of the new gas station"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "address_line_1",
+                            "type": "string",
+                            "required": true,
+                            "description": "Street name and number of the gas station"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "address_line_2",
+                            "type": "string",
+                            "required": true,
+                            "description": "Name of the gas station neighborhood"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "location",
+                            "type": "string",
+                            "required": true,
+                            "description": "State and city name where the gas station is located"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "latitude",
+                            "type": "double",
+                            "required": true,
+                            "description": "Latitude coordinate"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "longitude",
+                            "type": "double",
+                            "required": true,
+                            "description": "Longitude coordinate"
                         }
                     ],
                     "responseMessages": [
@@ -152,6 +201,55 @@
                             "type": "integer",
                             "required": true,
                             "description": "ID of gas station that needs to be edited"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "name",
+                            "type": "string",
+                            "required": false,
+                            "description": "The name of the gas station"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "social_reason",
+                            "type": "string",
+                            "required": false,
+                            "description": "The legal name of the gas station"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "address_line_1",
+                            "type": "string",
+                            "required": false,
+                            "description": "Street name and number of the gas station"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "address_line_2",
+                            "type": "string",
+                            "required": false,
+                            "description": "Name of the gas station neighborhood"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "location",
+                            "type": "string",
+                            "required": false,
+                            "description": "State and city name where the gas station is located"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "latitude",
+                            "type": "double",
+                            "required": false,
+                            "description": "Latitude coordinate"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "longitude",
+                            "type": "double",
+                            "required": false,
+                            "description": "Longitude coordinate"
                         }
                     ],
                     "responseMessages": [

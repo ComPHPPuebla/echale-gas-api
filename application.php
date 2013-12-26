@@ -29,5 +29,5 @@ $app->add(new JsonpMiddleware());
 
 $stationContainer = new StationContainer();
 $stationContainer->register($app);
-$stationRoutes = new StationRoutes();
-$stationRoutes->register($app);
+$stationRoutes = new StationRoutes($app);
+$stationRoutes->register();

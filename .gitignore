@@ -22,4 +22,5 @@ codecept.phar
 # Others
 
 /public/index.php
+/public/docs/index.php
 /echalegas.sq3
