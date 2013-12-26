@@ -1,5 +1,5 @@
 <?php
-namespace EchaleGas\TableGateway;
+namespace Api\Station;
 
 use \Doctrine\DBAL\Query\QueryBuilder;
 use \ComPHPPuebla\Doctrine\TableGateway\Table;

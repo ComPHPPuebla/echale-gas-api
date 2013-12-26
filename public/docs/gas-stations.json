@@ -1,0 +1,382 @@
+{
+    "basePath": "http://api.echalegas.dev",
+    "swaggerVersion": "1.2",
+    "apiVersion": "0.1",
+    "resourcePath": "/gas-stations",
+    "apis": [
+        {
+            "path": "/gas-stations",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Find all the available gas stations",
+                    "nickname": "getGasStations",
+                    "type": "array[GasStation]",
+                    "parameters": [
+                        {
+                            "paramType": "header",
+                            "name": "Accept",
+                            "type": "string",
+                            "required": true,
+                            "description": "The type of response that the web service client expects",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ]
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "page",
+                            "type": "integer",
+                            "required": false,
+                            "description": "The page number of gas stations to be retrieved"
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "page_size",
+                            "type": "integer",
+                            "required": false,
+                            "description": "Defines the number of gas stations to be retrieved by page. This parameter is ignored if the page parameter is not present. The default is 10"
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "latitude",
+                            "type": "integer",
+                            "required": false,
+                            "description": "This parameter will filter the results retrieving the nearer gas stations first. This parameter will be ignored if parameter longitude is not provided"
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "longitude",
+                            "type": "integer",
+                            "required": false,
+                            "description": "This parameter will filter the results retrieving the nearer gas stations first. This parameter will be ignored if parameter latitude is not provided"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 404,
+                            "message": "Invalid page number provided. Stations not found"
+                        }
+                    ],
+                    "notes": "Find all available gas stations. The result can be paginated and filtered by geolocation"
+                },
+                {
+                    "method": "POST",
+                    "summary": "Register a new gas station",
+                    "nickname": "newGasStation",
+                    "type": "GasStation",
+                    "parameters": [
+                        {
+                            "paramType": "header",
+                            "name": "Accept",
+                            "type": "string",
+                            "required": true,
+                            "description": "The type of response that the web service client expects",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ]
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "name",
+                            "type": "string",
+                            "required": true,
+                            "description": "The name of the new gas station"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "social_reason",
+                            "type": "string",
+                            "required": true,
+                            "description": "The legal name of the new gas station"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "address_line_1",
+                            "type": "string",
+                            "required": true,
+                            "description": "Street name and number of the gas station"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "address_line_2",
+                            "type": "string",
+                            "required": true,
+                            "description": "Name of the gas station neighborhood"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "location",
+                            "type": "string",
+                            "required": true,
+                            "description": "State and city name where the gas station is located"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "latitude",
+                            "type": "double",
+                            "required": true,
+                            "description": "Latitude coordinate"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "longitude",
+                            "type": "double",
+                            "required": true,
+                            "description": "Longitude coordinate"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Gas station data did not pass validation"
+                        }
+                    ]
+                },
+                {
+                    "method": "OPTIONS",
+                    "summary": "Get the valid options of gas stations",
+                    "nickname": "optionsGasStations"
+                }
+            ]
+        },
+        {
+            "path": "/gas-stations/{gasStationId}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Find a gas station by ID",
+                    "nickname": "getGasStationById",
+                    "type": "GasStation",
+                    "parameters": [
+                        {
+                            "paramType": "header",
+                            "name": "Accept",
+                            "type": "string",
+                            "required": true,
+                            "description": "The type of response that the web service client expects",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ]
+                        },
+                        {
+                            "paramType": "path",
+                            "name": "gasStationId",
+                            "type": "integer",
+                            "required": true,
+                            "description": "ID of gas station that needs to be fetched"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 404,
+                            "message": "Gas station not found"
+                        }
+                    ],
+                    "notes": "Returns a gas station based on ID"
+                },
+                {
+                    "method": "PUT",
+                    "summary": "Edit the information of a gas station",
+                    "nickname": "editGasStation",
+                    "type": "GasStation",
+                    "parameters": [
+                        {
+                            "paramType": "header",
+                            "name": "Accept",
+                            "type": "string",
+                            "required": true,
+                            "description": "The type of response that the web service client expects",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ]
+                        },
+                        {
+                            "paramType": "path",
+                            "name": "gasStationId",
+                            "type": "integer",
+                            "required": true,
+                            "description": "ID of gas station that needs to be edited"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "name",
+                            "type": "string",
+                            "required": false,
+                            "description": "The name of the gas station"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "social_reason",
+                            "type": "string",
+                            "required": false,
+                            "description": "The legal name of the gas station"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "address_line_1",
+                            "type": "string",
+                            "required": false,
+                            "description": "Street name and number of the gas station"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "address_line_2",
+                            "type": "string",
+                            "required": false,
+                            "description": "Name of the gas station neighborhood"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "location",
+                            "type": "string",
+                            "required": false,
+                            "description": "State and city name where the gas station is located"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "latitude",
+                            "type": "double",
+                            "required": false,
+                            "description": "Latitude coordinate"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "longitude",
+                            "type": "double",
+                            "required": false,
+                            "description": "Longitude coordinate"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Gas station data did not pass validation"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Gas station data not found"
+                        }
+                    ]
+                },
+                {
+                    "method": "DELETE",
+                    "summary": "Delete the information of a gas station",
+                    "nickname": "deleteGasStation",
+                    "parameters": [
+                        {
+                            "paramType": "header",
+                            "name": "Accept",
+                            "type": "string",
+                            "required": true,
+                            "description": "The type of response that the web service client expects",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ]
+                        },
+                        {
+                            "paramType": "path",
+                            "name": "gasStationId",
+                            "type": "integer",
+                            "required": true,
+                            "description": "ID of gas station that needs to be deleted"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 404,
+                            "message": "Gas station not found"
+                        }
+                    ]
+                },
+                {
+                    "method": "OPTIONS",
+                    "summary": "Get the valid options of a gas station",
+                    "nickname": "optionsGasStation",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "gasStationId",
+                            "type": "integer",
+                            "required": true,
+                            "description": "ID of gas station"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 404,
+                            "message": "Gas station not found"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models": {
+        "GasStation": {
+            "id": "GasStation",
+            "properties": {
+                "station_id": {
+                    "description": "Unique identifier of the gas station",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name of the gas station",
+                    "type": "string"
+                },
+                "social_reason": {
+                    "description": "Official name of the gas station",
+                    "type": "string"
+                },
+                "address_line_1": {
+                    "description": "Street name and number of the gas station",
+                    "type": "string"
+                },
+                "address_line_2": {
+                    "description": "Neighborhood name of the gas station",
+                    "type": "string"
+                },
+                "location": {
+                    "description": "State and city name where the gas station is located",
+                    "type": "string"
+                },
+                "latitude": {
+                    "description": "Latitude coordinate",
+                    "type": "double"
+                },
+                "longitude": {
+                    "description": "Longitude coordinate",
+                    "type": "double"
+                },
+                "created_at": {
+                    "description": "Registration date of the gas station",
+                    "type": "string",
+                    "format": "date-format"
+                },
+                "last_updated_at": {
+                    "description": "Most recent date in which the gas station was edited",
+                    "type": "string",
+                    "format": "date-format"
+                }
+            },
+            "required": [
+                "address_line_1",
+                "latitude",
+                "location",
+                "longitude",
+                "name",
+                "social_reason",
+                "station_id"
+            ]
+        }
+    },
+    "produces": [
+        "application/json",
+        "application/xml"
+    ]
+}

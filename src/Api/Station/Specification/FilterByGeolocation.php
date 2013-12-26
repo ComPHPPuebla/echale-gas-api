@@ -1,5 +1,5 @@
 <?php
-namespace EchaleGas\TableGateway\Specification;
+namespace Api\Station\Specification;
 
 use \ComPHPPuebla\Doctrine\TableGateway\Specification\QueryBuilderSpecification;
 use \Doctrine\DBAL\Query\QueryBuilder;
