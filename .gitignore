@@ -14,6 +14,7 @@
 # Binaries
 /bin/phing
 /bin/phpunit
+/bin/swagger
 
 # .phar files
 codecept.phar
