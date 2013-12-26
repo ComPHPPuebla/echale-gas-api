@@ -26,7 +26,7 @@ class ApplicationContainer
 	{
 	    $app->container->singleton('cache', function() {
 
-	        return new FilesystemCache('cache/db');
+	        return new FilesystemCache('tmp/cache/db');
 	    });
 
         $app->container->singleton('connection', function() {
@@ -38,7 +38,7 @@ class ApplicationContainer
 
         $app->container->singleton('log', function () {
             $logger = new Logger('echale-gas');
-            $logger->pushHandler(new StreamHandler('logs/app.log', LogLevel::DEBUG));
+            $logger->pushHandler(new StreamHandler('tmp/logs/app.log', LogLevel::DEBUG));
 
             return $logger;
         });
@@ -55,7 +55,7 @@ class ApplicationContainer
 
         $app->container->singleton('proxiesConfiguration', function() use ($app) {
             $config = new ProxyConfiguration();
-            $config->setProxiesTargetDir('cache/proxies');
+            $config->setProxiesTargetDir('tmp/cache/proxies');
             spl_autoload_register($config->getProxyAutoloader());
 
             return $config;
@@ -67,7 +67,7 @@ class ApplicationContainer
             $twig = new Twig();
             $twig->parserOptions = [
                 'charset' => 'utf-8',
-                'cache' => realpath('cache/twig'),
+                'cache' => realpath('tmp/cache/twig'),
                 'auto_reload' => true,
                 'strict_variables' => false,
                 'autoescape' => true
