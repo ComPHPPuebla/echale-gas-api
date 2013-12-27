@@ -22,12 +22,11 @@ use \Doctrine\Common\Cache\FilesystemCache;
 
 class ApplicationContainer
 {
-	public function register(Slim $app)
-	{
-	    $app->container->singleton('cache', function() {
-
-	        return new FilesystemCache('tmp/cache/db');
-	    });
+    public function register(Slim $app)
+    {
+        $app->container->singleton('cache', function() {
+            return new FilesystemCache('tmp/cache/db');
+        });
 
         $app->container->singleton('connection', function() {
             $dbOptions = require 'config/connection.config.php';
@@ -44,12 +43,10 @@ class ApplicationContainer
         });
 
         $app->container->singleton('paginator', function() use ($app) {
-
             return new PagerfantaPaginator($app->config('defaultPageSize'));
         });
 
         $app->container->singleton('paginatorFactory', function() use ($app) {
-
             return new PaginatorFactory($app->paginator);
         });
 
@@ -100,5 +97,5 @@ class ApplicationContainer
         });
 
         $app->view($app->twig);
-	}
+    }
 }

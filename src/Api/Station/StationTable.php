@@ -23,8 +23,8 @@ class StationTable extends Table
     }
 
     /**
-     * @param array $values
-     * @param int $id
+     * @param  array $values
+     * @param  int   $id
      * @return array
      */
     public function update(array $values, $id)
@@ -35,7 +35,7 @@ class StationTable extends Table
     }
 
     /**
-     * @param int $stationId
+     * @param  int  $stationId
      * @return void
      */
     public function delete($stationId)
@@ -44,7 +44,7 @@ class StationTable extends Table
     }
 
     /**
-     * @param array $criteria
+     * @param  array        $criteria
      * @return QueryBuilder
      */
     public function getQueryCount(array $criteria)
@@ -56,7 +56,7 @@ class StationTable extends Table
     }
 
     /**
-     * @param array $criteria
+     * @param  array        $criteria
      * @return QueryBuilder
      */
     public function getQueryFindAll(array $criteria)

@@ -5,7 +5,7 @@ use \Slim\Slim;
 use \ComPHPPuebla\Slim\Controller\EventListener\FormatResourceListener;
 use \ComPHPPuebla\Doctrine\TableGateway\EventListener\HasTimestampListener;
 use \ComPHPPuebla\Doctrine\TableGateway\Specification\ChainedSpecification;
-use ComPHPPuebla\Doctrine\TableGateway\Specification\PaginationSpecification;
+use \ComPHPPuebla\Doctrine\TableGateway\Specification\PaginationSpecification;
 use \ComPHPPuebla\Doctrine\TableGateway\EventListener\QuerySpecificationListener;
 use \ComPHPPuebla\Doctrine\TableGateway\EventListener\CacheListener;
 use \ComPHPPuebla\Hypermedia\Formatter\HAL\CollectionFormatter;
@@ -15,7 +15,7 @@ use \ComPHPPuebla\Validator\ValitronValidator;
 use \ComPHPPuebla\Model\Model;
 use \Zend\EventManager\EventManager;
 use \Api\Station\StationTable;
-use \Api\Station\Specification\FilterByGeolocation;
+use \Api\Station\Specification\GeolocationSpecification;
 
 /**
  * @SWG\Model(id="GasStation",required="station_id, name, social_reason, address_line_1, location, latitude, longitude")
@@ -34,20 +34,17 @@ class StationContainer
      * @SWG\Property(name="created_at",type="string",format="date-format",description="Registration date of the gas station")
      * @SWG\Property(name="last_updated_at",type="string",format="date-format",description="Most recent date in which the gas station was edited")
      */
-	public function register(Slim $app)
-	{
-	    $app->container->singleton('station', function() use ($app) {
-
-	        return new Model($app->stationTable, $app->stationValidator, $app->paginatorFactory);
-	    });
+    public function register(Slim $app)
+    {
+        $app->container->singleton('station', function() use ($app) {
+            return new Model($app->stationTable, $app->stationValidator, $app->paginatorFactory);
+        });
 
         $app->container->singleton('stationFormatter', function() use ($app) {
-
             return new ResourceFormatter($app->urlHelper, 'station', 'station_id');
         });
 
         $app->container->singleton('stationsFormatter', function() use ($app) {
-
             return new CollectionFormatter($app->urlHelper, 'stations', $app->stationFormatter);
         });
 
@@ -56,7 +53,7 @@ class StationContainer
 
             $specification = new ChainedSpecification();
             $specification->addSpecification(new PaginationSpecification($app->config('defaultPageSize')));
-            $specification->addSpecification(new FilterByGeolocation());
+            $specification->addSpecification(new GeolocationSpecification());
             $eventManager->attach('postFindAll', new QuerySpecificationListener($specification));
 
             $eventManager->attachAggregate(new HasTimestampListener());
@@ -77,7 +74,6 @@ class StationContainer
         });
 
         $app->container->singleton('stationValidator', function() use ($app) {
-
             return new ValitronValidator(require 'config/validations/stations.config.php');
         });
 
@@ -98,5 +94,5 @@ class StationContainer
 
             return $app->controller;
         });
-	}
+    }
 }
