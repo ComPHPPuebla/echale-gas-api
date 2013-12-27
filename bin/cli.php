@@ -2,12 +2,12 @@
 /**
  * Application's CLI
  *
- * PHP version 5.3
+ * PHP version 5.4
  *
  * This source file is subject to the license that is bundled with this package in the
  * file LICENSE.
  *
- * @author     LMV <luis.montealegre@mandragora-web.systems.com>
+ * @author     LMV <montealegreluis@gmail.com>
  */
 require 'vendor/autoload.php';
 
@@ -30,7 +30,7 @@ use \ComPHPPuebla\Doctrine\Console\Command\LoadFixtureCommand;
 /**
  * Application's CLI
  *
- * @author     LMV <luis.montealegre@mandragora-web.systems.com>
+ * @author     LMV <montealegreluis@gmail.com>
  */
 $cli = new Application('Échale Ganas Command Line Interface');
 $cli->setCatchExceptions(true);

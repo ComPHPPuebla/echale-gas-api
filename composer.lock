@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "4026769dc5ba26a287f08a71bdbe805d",
+    "hash": "364f5b552c4df9d91eddd56a060b52af",
     "packages": [
         {
             "name": "comphppuebla/restful-extensions",

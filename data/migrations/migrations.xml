@@ -4,7 +4,7 @@
       xsi:schemaLocation="http://doctrine-project.org/schemas/migrations/configuration
                     http://doctrine-project.org/schemas/migrations/configuration.xsd">
 
-    <name>Echale Gas Migrations</name>
+    <name>Échale Gas Migrations</name>
 
     <migrations-namespace>Migrations</migrations-namespace>
 
